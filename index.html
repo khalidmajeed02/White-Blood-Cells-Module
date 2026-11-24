@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>White blood cells: interactive class set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7FB;--surf:#FFFFFF;--surf2:#F2EDF5;--ink:#231A2F;--mute:#6B6178;--line:#DDD3E3;
+  --accent:#4B3A8C;--onaccent:#FFFFFF;--hl:#D98E04;
+  --rbc:#C8203E;--deoxy:#7E2141;--old:#9A5562;--nuc:#4B3A8C;--stem:#D9CBE8;--baso:#5F74C6;--baso2:#8C9BDB;
+  --poly:#A77BB4;--orth:#E2899C;--lumen:#FBF0D8;--plasma:#EDCB72;--bili:#D9A21B;--mac:#CBD6EE;--epo:#1F8A80;
+  --brown:#7B4A2A;--alpha:#ABA0E2;--beta:#EDAFC3;--heme:#D2691E;--mucosa:#F0A3B3;--jaund:#E2BE3A;
+  --warn:#C62828;--ok:#2E7D57;--glass:#9AA3B5;--clay:#E3DDD5;--buffy:#ECE8F0;--feces:#C9A27E;--kid:#D97C8E;--okbg:#E2F3E9;--lumen2:#FFF9EC;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15111B;--surf:#1F1927;--surf2:#2A2333;--ink:#EFE9F4;--mute:#A89DB5;--line:#3D3447;
+    --accent:#A99BF0;--onaccent:#15111B;--hl:#F2B33D;
+    --rbc:#E8475F;--deoxy:#B23E62;--old:#B97A86;--nuc:#9D8DE6;--stem:#4E3F63;--baso:#7488DA;--baso2:#5B6AA8;
+    --poly:#9C70AC;--orth:#D97389;--lumen:#2E2618;--plasma:#E2BF63;--bili:#F0B93A;--mac:#3A4A6E;--epo:#3CC3B4;
+    --brown:#A8693F;--alpha:#6E60B8;--beta:#B76A86;--heme:#E88A3C;--mucosa:#C97585;--jaund:#E2BE3A;
+    --warn:#FF6B6B;--ok:#52C28A;--glass:#7C8496;--clay:#5A544D;--buffy:#C9C4D2;--feces:#8C6A4C;--kid:#B95C70;--okbg:#16352A;--lumen2:#3A3020;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15111B;--surf:#1F1927;--surf2:#2A2333;--ink:#EFE9F4;--mute:#A89DB5;--line:#3D3447;
+  --accent:#A99BF0;--onaccent:#15111B;--hl:#F2B33D;
+  --rbc:#E8475F;--deoxy:#B23E62;--old:#B97A86;--nuc:#9D8DE6;--stem:#4E3F63;--baso:#7488DA;--baso2:#5B6AA8;
+  --poly:#9C70AC;--orth:#D97389;--lumen:#2E2618;--plasma:#E2BF63;--bili:#F0B93A;--mac:#3A4A6E;--epo:#3CC3B4;
+  --brown:#A8693F;--alpha:#6E60B8;--beta:#B76A86;--heme:#E88A3C;--mucosa:#C97585;--jaund:#E2BE3A;
+  --warn:#FF6B6B;--ok:#52C28A;--glass:#7C8496;--clay:#5A544D;--buffy:#C9C4D2;--feces:#8C6A4C;--kid:#B95C70;--okbg:#16352A;--lumen2:#3A3020;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+button:disabled{opacity:.4;cursor:default}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1440px;margin:0 auto}
+.side{padding:28px 18px;border-right:1px solid var(--line);position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto}
+.side h1{font-size:1.6rem;line-height:1.1;margin:0 0 6px;letter-spacing:-.01em}
+.side .lede{margin:0 0 18px;color:var(--mute);font-size:.92rem}
+.grp{font-size:.88rem;color:var(--mute);margin:18px 10px 4px;font-weight:700}
+.nav a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:.98rem;line-height:1.3}
+.nav a .n{color:var(--mute);font-variant-numeric:tabular-nums;min-width:1.3em;text-align:right}
+.nav a:hover{background:var(--surf2)}
+.nav a[aria-current="page"]{background:var(--surf2);font-weight:700}
+.nav a[aria-current="page"] .n{color:var(--accent)}
+main{padding:28px 32px 48px;min-width:0}
+.mhead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.mhead h2{font-size:2rem;margin:0;line-height:1.12;letter-spacing:-.015em;max-width:30ch}
+.mhead .ref{color:var(--mute);margin:6px 0 0;font-size:.95rem}
+button{font:inherit;font-size:.95rem;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer;line-height:1.2}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--onaccent);border-color:var(--accent);font-weight:700}
+button.link{border:0;background:none;padding:0;color:var(--accent);text-decoration:underline;font-weight:700;margin-left:6px}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,.node:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.scen{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 12px;min-height:4px}
+.scen button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stage{background:var(--surf);border:1px solid var(--line);border-radius:18px;overflow-x:auto}
+.stage>svg{display:block;width:100%;height:auto;min-width:620px}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 28px;margin-top:16px;align-items:start}
+.cap{font-size:1.22rem;line-height:1.5;max-width:66ch;margin:0}
+.ask{margin:12px 0 0;padding:12px 16px;border-left:4px solid var(--hl);background:var(--surf2);border-radius:0 12px 12px 0;max-width:66ch;font-size:1.08rem}
+.ask b.k{display:block;font-size:.85rem;color:var(--mute)}
+.ask .ans{display:block;margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--okbg);border-left:5px solid var(--ok);font-weight:700;font-size:1.15rem;line-height:1.45;color:var(--ink)}
+.ask .ans::before{content:"Why: ";color:var(--ok)}
+.mq{margin:4px 0 10px;font-size:1.12rem;font-weight:700}
+.mopts{display:grid;gap:8px}
+.mopt{display:flex;gap:12px;align-items:flex-start;text-align:left;border-radius:12px;padding:10px 14px;background:var(--surf);border:1.5px solid var(--line);width:100%;font-size:1.02rem;line-height:1.4}
+.mopt .ml{font-weight:700;color:var(--accent);min-width:1.1em}
+.mopt:hover:not(:disabled){border-color:var(--accent)}
+.mopt.right{border:2px solid var(--ok);background:var(--okbg)}
+.mopt.right .ml{color:var(--ok)}
+.mopt.wrong{border:2px solid var(--warn);text-decoration:line-through;text-decoration-color:var(--warn)}
+.mopt:disabled{opacity:1;cursor:default}
+.mopt.wrong:disabled{opacity:.7}
+.mfb{margin:10px 0 0;font-weight:700;font-size:1.08rem}
+.mfb.good{color:var(--ok)}.mfb.bad{color:var(--warn)}
+#qBody .ask{border-left:0;background:none;padding:0;max-width:none}
+#qBody .mq{font-size:1.25rem}
+.qscore{text-align:center;font-size:3rem;font-weight:700;margin:10px 0 0;color:var(--accent)}
+.showbtn{display:block;margin-top:10px;border:2px solid var(--ok);color:var(--ok);font-weight:700;background:var(--surf)}
+.showbtn:hover{background:var(--okbg);border-color:var(--ok)}
+.ask .hint{display:block;margin-top:6px;color:var(--mute);font-size:.9rem}
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.ctrl.single .stepbtn,.ctrl.single .toggle{display:none}
+.count{color:var(--mute);font-variant-numeric:tabular-nums;font-size:.95rem;min-width:6.5em;text-align:right}
+.toggle{display:inline-flex;gap:8px;align-items:center;font-size:.95rem;color:var(--mute);cursor:pointer;margin-right:6px}
+.toggle input{width:18px;height:18px;accent-color:var(--accent)}
+.extra{margin-top:20px}
+.extra:empty{display:none}
+.info{background:var(--surf2);border-radius:14px;padding:14px 18px;max-width:72ch;margin-top:12px}
+.info h3{margin:0 0 4px;font-size:1.1rem}
+.info p{margin:0}
+.note{color:var(--mute);font-size:.9rem;max-width:72ch}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.labt{border-collapse:collapse;min-width:420px;font-size:.98rem}
+.labt caption{text-align:left;font-weight:700;padding-bottom:6px}
+.labt td,.labt th{padding:7px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.labt th{color:var(--mute);font-weight:400}
+.scroll{overflow-x:auto}
+.calc{background:var(--surf2);border-radius:14px;padding:14px 18px;max-width:72ch}
+.calc input[type=range]{width:100%;max-width:420px;accent-color:var(--rbc);display:block;margin:8px 0}
+.labgrid{display:grid;grid-template-columns:minmax(220px,340px) minmax(0,1fr);gap:20px;padding:20px;align-items:start}
+.labgrid svg{width:100%;height:auto;display:block}
+.labctl label{display:block;margin:0 0 12px;font-weight:700}
+.labctl select,.labctl input{font:inherit;display:block;margin-top:6px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surf);color:var(--ink);max-width:100%}
+.labctl input{width:9em}
+.fb{font-weight:700;min-height:1.5em;font-size:1.12rem}
+.fb.good{color:var(--ok)} .fb.bad{color:var(--warn)}
+.bars td{white-space:nowrap}
+.bar{display:inline-block;height:12px;border-radius:6px;vertical-align:middle;margin-right:8px}
+.case{background:var(--surf2);border-radius:14px;padding:14px 18px;max-width:72ch;margin-top:12px}
+.case p{margin:8px 0 0}
+.case .ct{font-size:1.12rem}
+.esr-list{max-width:72ch;padding-left:1.2em}
+.esr-list li{margin:6px 0}
+.f-surf{fill:var(--surf)}
+.pent{fill:var(--surf2);stroke:var(--heme);stroke-width:4}
+.bondl{stroke:var(--ink);stroke-width:3;fill:none}
+.rack{fill:var(--surf2);stroke:var(--line);stroke-width:1.5}
+.tag{fill:var(--surf);stroke:var(--line);stroke-width:1.5}
+
+.modal{position:fixed;inset:0;background:rgba(18,12,26,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.mcard{background:var(--surf);color:var(--ink);border-radius:20px;max-width:920px;width:100%;max-height:calc(100% - 40px);overflow:auto;padding:28px 32px;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:pop .3s ease-out}
+.mcard .mk{margin:0;color:var(--accent);font-weight:700;font-size:.95rem}
+.mcard h2{margin:2px 0 18px;font-size:1.8rem;line-height:1.15}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.mcols section{background:var(--surf2);border-radius:14px;padding:16px 20px}
+.mcols h3{margin:0 0 8px;font-size:1.15rem}
+.mcols ol,.mcols ul{margin:0;padding-left:1.25em}
+.mcols li{margin:7px 0;line-height:1.45}
+.mcols .lead{margin:0 0 4px;color:var(--mute);font-size:.95rem}
+.mfoot{display:flex;justify-content:flex-end;margin-top:20px}
+.mfoot button{font-size:1.05rem;padding:10px 26px}
+@media (max-width:760px){.mcols{grid-template-columns:1fr}.mcard{padding:20px}}
+body.present .side{display:none}
+body.present .app{grid-template-columns:1fr;max-width:none}
+body.present .cap{font-size:1.5rem}
+body.present .ask{font-size:1.25rem}
+@media (max-width:880px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding:16px 14px 10px}
+  .side .lede{margin-bottom:10px}
+  .nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:6px}
+  .grp{display:none}
+  .nav a{white-space:nowrap;border:1px solid var(--line)}
+  main{padding:18px 14px 40px}
+  .mhead h2{font-size:1.5rem}
+  .panel{grid-template-columns:1fr}
+  .ctrl{justify-content:flex-start}
+  .count{text-align:left}
+  .labgrid{grid-template-columns:1fr}
+  .cap{font-size:1.08rem}
+}
+
+/* SVG */
+.t{fill:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:15px}
+.t-s{font-size:13px;fill:var(--mute)}
+.t-s2{font-size:12.5px;fill:var(--mute)}
+.t-n{font-size:13px;font-weight:700}
+.t-b{font-weight:700}
+.t-l{font-size:20px;font-weight:700}
+.t-xl{font-size:32px;font-weight:700}
+.t-e{font-size:11.5px;fill:var(--mute)}
+.t-c{text-anchor:middle}
+.warn-t{fill:var(--warn);font-weight:700}
+.on-dark{fill:#fff}
+.f-rbc{fill:var(--rbc)}.f-deoxy{fill:var(--deoxy)}.f-old{fill:var(--old)}.f-nuc{fill:var(--nuc)}
+.f-stem{fill:var(--stem)}.f-baso{fill:var(--baso)}.f-baso2{fill:var(--baso2)}.f-poly{fill:var(--poly)}.f-orth{fill:var(--orth)}
+.f-lumen{fill:var(--lumen)}.f-plasma{fill:var(--plasma)}.f-bili{fill:var(--bili)}.f-mac{fill:var(--mac)}
+.f-epo{fill:var(--epo)}.f-brown{fill:var(--brown)}.f-alpha{fill:var(--alpha)}.f-beta{fill:var(--beta)}
+.f-heme{fill:var(--heme)}.f-fe{fill:var(--ink)}.f-o2{fill:var(--rbc)}.f-mute{fill:var(--mute)}.f-surf2{fill:var(--surf2)}
+.f-accent{fill:var(--accent)}.f-kid{fill:var(--kid)}.f-mucosa{fill:var(--mucosa)}.f-buffy{fill:var(--buffy)}.f-clay{fill:var(--clay)}
+.rbc-c{fill:#fff;opacity:.28}
+.rim{stroke:rgba(0,0,0,.18);stroke-width:1.2}
+.sh,.box,.box-mac,.box-fec,.nb{filter:url(#sh)}
+.chr{fill:#000;opacity:.22}
+.fat{fill:var(--surf);stroke:var(--line);stroke-width:1.5}
+.endo{fill:var(--nuc);opacity:.55}
+.bob{transform-box:fill-box;transform-origin:center}
+.on .bob{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateX(14px)}}
+.oldc{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.wall{fill:none;stroke:var(--deoxy);stroke-width:7}
+.macs{stroke:var(--nuc);stroke-width:2}
+.burst{fill:none;stroke:var(--warn);stroke-width:4;stroke-linecap:round}
+.box{fill:var(--surf2);stroke:var(--line);stroke-width:1.5}
+.box-mac{fill:var(--mac);stroke:var(--line);stroke-width:1.5}
+.box-fec{fill:var(--feces);stroke:var(--line);stroke-width:1.5}
+.arr{fill:none;stroke:var(--mute);stroke-width:2.5;marker-end:url(#ah)}
+.arr.dash{stroke-dasharray:5 5}
+.flow{stroke-dasharray:9 7;animation:dash 1.2s linear infinite}
+.ves-a{fill:none;stroke:var(--rbc);stroke-width:20;opacity:.22;stroke-linecap:round}
+.ves-v{fill:none;stroke:var(--deoxy);stroke-width:20;opacity:.22;stroke-linecap:round}
+.alv{fill:var(--lumen);stroke:var(--rbc);stroke-width:1.5;opacity:.9}
+.cellb{fill:var(--surf2);stroke:var(--line);stroke-width:1.5}
+.glass{fill:none;stroke:var(--glass);stroke-width:3}
+.tick{stroke:var(--mute);stroke-width:1.2}
+.nucleolus{fill:var(--stem);opacity:.8}
+.elb{fill:var(--surf);opacity:.92}
+.node{cursor:pointer}
+.node .nb{fill:var(--surf2);stroke:var(--line);stroke-width:2}
+.node.k-iron .nb{stroke:var(--heme)} .node.k-low .nb{stroke:var(--baso)} .node.k-high .nb{stroke:var(--rbc)} .node.k-poly .nb{stroke:var(--epo)} .node.k-root .nb{stroke:var(--accent);stroke-width:2.5}
+.node:hover .nb{fill:var(--surf)}
+.node:focus{outline:none}
+.node.sel .nb{fill:var(--surf);stroke:var(--accent);stroke-width:3.5}
+.node.right .nb{stroke:var(--ok);stroke-width:5}
+.node.wrong .nb{stroke:var(--warn);stroke-width:5}
+.nq{opacity:0}
+.quiz .node:not(.rev) .nl{opacity:0}
+.quiz .node:not(.rev) .nq{opacity:1}
+
+/* step engine */
+[data-k]{opacity:0}
+[data-k].on{opacity:1}
+.now{animation:pop .7s ease-out both}
+.dim{opacity:.18!important}
+.hot>rect,.hot>ellipse,.hot>path,.hot>circle,rect.hot,path.hot,ellipse.hot{stroke:var(--hl)!important;stroke-width:4.5px!important}
+.predict-hide .now.lab,.predict-hide .now .lab{opacity:0!important}
+.sq,.stuck,.sq2,.drift,.driftL,.blink{transform-box:fill-box;transform-origin:center}
+.now .sq{animation:sq 4.2s ease-in-out both}
+.now .stuck{animation:stuck 3s ease-in both}
+.now .sq2{animation:sq2 3.6s ease-in-out both}
+.on .drift{animation:drift 1.8s ease-in infinite}
+.on .driftL{animation:driftL 1.8s ease-in infinite}
+.f-co2{fill:var(--mute)}
+.on .blink{animation:blink 1.6s ease-in-out infinite}
+.tubeG{transform-box:view-box;transform-origin:210px 230px}
+.tubeG.spin{animation:spin 1.6s cubic-bezier(.55,0,.25,1)}
+@keyframes pop{from{opacity:0}to{opacity:1}}
+@keyframes dash{to{stroke-dashoffset:-16}}
+@keyframes sq{0%{transform:translateX(0)}30%{transform:translateX(150px)}42%{transform:translateX(215px) scale(1.55,.55)}70%{transform:translateX(400px) scale(1.55,.55)}82%{transform:translateX(470px)}100%{transform:translateX(560px)}}
+@keyframes stuck{0%{transform:translateX(0)}70%{transform:translateX(150px)}80%{transform:translateX(160px) scale(1.06,.9)}88%{transform:translateX(152px)}100%{transform:translateX(158px) scale(1.06,.9)}}
+@keyframes sq2{0%{transform:translateX(0)}35%{transform:translateX(42px)}48%{transform:translateX(70px) scale(1.7,.45)}62%{transform:translateX(92px) scale(1.7,.45)}74%{transform:translateX(112px)}100%{transform:translateX(150px)}}
+@keyframes drift{0%{transform:translateX(-18px);opacity:0}30%{opacity:1}100%{transform:translateX(26px);opacity:0}}
+@keyframes blink{50%{opacity:.25}}
+@keyframes driftL{0%{transform:translateX(18px);opacity:0}30%{opacity:1}100%{transform:translateX(-26px);opacity:0}}
+@keyframes spin{to{transform:rotate(1080deg)}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
+  .flow{stroke-dasharray:none}
+}
+
+/* ---------- white blood cell additions ---------- */
+:root{--cyto:#F3DFE9;--ngran:#B98FC4;--eos:#E2572F;--basg:#383A96;--mono:#C3CDE8;--lymph:#A8C3EE;--bact:#3F8F4F;--paras:#B0703C;--hist:#D98E04;--tissue:#FCF3F5}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--cyto:#5B4556;--ngran:#C9A2D2;--eos:#F0703F;--basg:#8A8EF0;--mono:#4B5A7C;--lymph:#4D6896;--bact:#63C077;--paras:#C98B55;--hist:#F2B33D;--tissue:#241B22}
+}
+:root[data-theme="dark"]{--cyto:#5B4556;--ngran:#C9A2D2;--eos:#F0703F;--basg:#8A8EF0;--mono:#4B5A7C;--lymph:#4D6896;--bact:#63C077;--paras:#C98B55;--hist:#F2B33D;--tissue:#241B22}
+.f-cyto{fill:var(--cyto)}.f-ngran{fill:var(--ngran)}.f-eos{fill:var(--eos)}.f-basg{fill:var(--basg)}.f-mono{fill:var(--mono)}.f-lymph{fill:var(--lymph)}
+.f-bact{fill:var(--bact)}.f-paras{fill:var(--paras)}.f-hist{fill:var(--hist)}.f-tissue{fill:var(--tissue)}
+.strand,.horse{stroke:var(--nuc);fill:none;stroke-linecap:round}
+.worm{stroke:var(--paras);fill:none;stroke-width:10;stroke-linecap:round}
+.gcell{fill:var(--surf);stroke:var(--mute);stroke-width:1.5}
+.gnuc{fill:var(--mute);opacity:.3}
+.deadc{fill:none;stroke:var(--mute);stroke-width:2;stroke-dasharray:4 4}
+.ves-l{fill:none;stroke:var(--epo);stroke-width:20;opacity:.25;stroke-linecap:round}
+.brk{fill:none;stroke:var(--mute);stroke-width:2}
+.ring{fill:none;stroke:var(--hl);stroke-width:4}
+.hc{fill:none}
+.aby{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.field{fill:var(--lumen2);stroke:var(--glass);stroke-width:6}
+.band{fill:var(--okbg);stroke:var(--ok);stroke-width:1.5}
+.mig,.grow{transform-box:fill-box;transform-origin:center}
+.now .mig{animation:dia 4.4s ease-in-out both}
+.now .grow{animation:grow 2.8s ease-out both}
+@keyframes mig{0%{transform:translate(0,0)}38%{transform:translate(var(--mx),0)}52%{transform:translate(var(--mx),calc(var(--dy)*.28)) scale(.7,1.22)}66%{transform:translate(var(--mx),calc(var(--dy)*.5))}100%{transform:translate(var(--dx),var(--dy))}}
+@keyframes grow{from{transform:scale(.38)}to{transform:scale(1)}}
+.dbtns{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:0 0 10px}
+.dbtns button{border-radius:12px;padding:10px 12px;font-weight:700;border-width:1.5px}
+.keyrow{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 4px}
+.keyrow figure{margin:0;text-align:center;font-size:.92rem;color:var(--mute);max-width:120px}
+.keyrow figure b{display:block;color:var(--ink)}
+.keyrow svg{width:76px;height:76px;display:block;margin:0 auto 4px}
+.rng{display:inline-block;position:relative;width:210px;height:12px;border-radius:6px;background:var(--surf);border:1px solid var(--line);vertical-align:middle;margin-right:8px}
+.rng i{position:absolute;top:0;bottom:0;border-radius:6px;background:var(--ok)}
+.labt td.num,.labt th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+.labgrid>*{min-width:0}
+#dTab{min-width:0;width:100%;max-width:520px}
+.labt td.num{white-space:nowrap}
+
+.endc{fill:var(--deoxy)}
+.chd{fill:var(--mute);opacity:.55}.chl{stroke:var(--mute);stroke-width:1;opacity:.3}
+@keyframes dia{0%{transform:translate(0,0)}30%,38%{transform:translate(var(--gx),var(--gy0))}48%{transform:translate(var(--gx),var(--gy1)) scale(.32,1.25)}58%{transform:translate(var(--gx),var(--gy2)) scale(1)}100%{transform:translate(var(--dx),var(--dy))}}
+.thru,.slide{transform-box:fill-box;transform-origin:center}
+.now .slide{animation:slide 1.8s ease-in-out both}
+@keyframes slide{from{transform:translate(var(--sx),var(--sy))}}
+.now .thru{animation:thru 3s ease-in-out both}
+@keyframes thru{0%,15%{transform:translate(0,0)}50%{transform:translate(0,var(--gy1)) scale(.32,1.3)}80%,100%{transform:translate(0,var(--gy2)) scale(1)}}
+.on .thru{transform:translate(0,var(--gy2))}
+
+.f-skin{fill:#F2C6B4}.skc{fill:#F7D6C8;stroke:#E0A994;stroke-width:1}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .f-skin{fill:#6E4A40}:root:not([data-theme="light"]) .skc{fill:#80584C;stroke:#9C6E60}}
+:root[data-theme="dark"] .f-skin{fill:#6E4A40}:root[data-theme="dark"] .skc{fill:#80584C;stroke:#9C6E60}
+.burst{fill:var(--warn)}
+.box.trig{stroke:var(--accent);stroke-width:2.5}.box.histb{stroke:var(--hist);stroke-width:2.5}.box.sysb{stroke:var(--warn);stroke-width:2.5}
+.box.ring{stroke:var(--hl);stroke-width:3}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <h1>White blood cells</h1>
+    <p class="lede">Interactive class set: blood and its functions</p>
+    <nav class="nav" id="nav" aria-label="Modules"></nav>
+  </aside>
+  <main>
+    <div class="mhead">
+      <div>
+        <h2 id="mt"></h2>
+        <button id="bTest" class="primary" style="margin-top:12px">Test yourself</button>
+        <p class="ref" id="mref" hidden></p>
+      </div>
+      <div class="row"><button id="bIntro" title="Show what to do and the learning outcomes">Instructions</button><button id="bPresent" aria-pressed="false" title="Hide the module list for projection (Esc to exit)">Present</button></div>
+    </div>
+    <div class="scen" id="scen"></div>
+    <div class="stage" id="stage"></div>
+    <div class="panel" id="panel">
+      <div id="cap" aria-live="polite"></div>
+      <div class="ctrl" id="ctrl">
+        <label class="toggle" title="Hide labels and the explanation until you press Next, so the class can guess first"><input type="checkbox" id="pred"> Predict mode</label>
+        <span class="count stepbtn" id="count"></span>
+        <button id="bBack" class="stepbtn">Back</button>
+        <button id="bPlay" class="stepbtn">Play</button>
+        <button id="bNext" class="primary stepbtn">Next</button>
+      </div>
+    </div>
+    <div class="extra" id="extra"></div>
+    <footer style="margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute);font-size:.95rem">Created By: <b style="color:var(--ink)">Dr. Khalid Abdul Majeed</b>, Department of Physiology, UVAS</footer>
+  </main>
+</div>
+<div class="modal" id="intro" hidden role="dialog" aria-modal="true" aria-labelledby="introT">
+  <div class="mcard">
+    <p class="mk" id="introN"></p>
+    <h2 id="introT"></h2>
+    <div class="mcols">
+      <section><h3>What to do</h3><ol id="introDo"></ol></section>
+      <section><h3>Intended learning outcomes</h3><p class="lead">By the end, students should be able to:</p><ul id="introLo"></ul></section>
+    </div>
+    <div class="mfoot"><button id="introGo" class="primary">Start</button></div>
+  </div>
+</div>
+<div class="modal" id="quiz" hidden role="dialog" aria-modal="true" aria-labelledby="qT">
+  <div class="mcard">
+    <div class="row" style="justify-content:space-between"><p class="mk" id="qProg"></p><button id="qClose">Close</button></div>
+    <h2 id="qT"></h2>
+    <div id="qBody"></div>
+    <div class="mfoot"><button id="qNext" class="primary">Next question</button></div>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const CAP=s=>String(s).replace(/^([a-z])/,m=>m.toUpperCase());
+const T=(x,y,s,c='',a='')=>`<text x="${x}" y="${y}" class="t ${c}" ${a}>${/nocap/.test(c)?s:CAP(s)}</text>`;
+const R=(cx,cy,r,f='f-rbc',x='')=>`<g class="sh"><circle cx="${cx}" cy="${cy}" r="${r}" class="${f} rim ${x}"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#rbcS)" pointer-events="none"/></g>`;
+const O=(cx,cy,r)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#cellS)" pointer-events="none"/>`;
+const CELL=(cx,cy,r,f,nr,nx=0,ny=0)=>`<g class="sh"><circle cx="${cx}" cy="${cy}" r="${r}" class="${f} rim"/>${O(cx,cy,r)}</g>`+(nr?`<circle cx="${cx+nx}" cy="${cy+ny}" r="${nr}" class="f-nuc"/>${O(cx+nx,cy+ny,nr)}${GR(cx+nx,cy+ny,Math.max(3,Math.round(nr/3)),nr*.85,'chr')}`:'');
+const K=(k,inner,attr='')=>`<g data-k="${k}" ${attr}>${inner}</g>`;
+const DEFS=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="f-mute"/></marker>
+<linearGradient id="hbg" x1="0" x2="1"><stop offset="0" style="stop-color:var(--baso)"/><stop offset=".45" style="stop-color:var(--poly)"/><stop offset="1" style="stop-color:var(--rbc)"/></linearGradient>
+<radialGradient id="rbcS" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".38" stop-color="#fff" stop-opacity=".16"/><stop offset=".62" stop-color="#fff" stop-opacity="0"/><stop offset=".86" stop-color="#000" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".32"/></radialGradient>
+<radialGradient id="cellS" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></radialGradient>
+<linearGradient id="lumG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--lumen)"/><stop offset=".5" style="stop-color:var(--lumen2)"/><stop offset="1" style="stop-color:var(--lumen)"/></linearGradient>
+<filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".18"/></filter></defs>`;
+const SV=(inner,vb='0 0 800 440',label='Diagram')=>`<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">${DEFS}${inner}</svg>`;
+const BX=o=>`<g ${o.k?`data-k="${o.k}"`:''} ${o.tk?`data-t="${o.tk}"`:''}><rect x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}" rx="10" class="${o.cls||'box'}"/>${T(o.x+o.w/2,o.y+(o.s?o.h/2-3:o.h/2+5),o.t,'t-c t-b')}${o.s?T(o.x+o.w/2,o.y+o.h/2+15,o.s,'t-c t-s',o.sk?`data-t="${o.sk}"`:''):''}${o.extra||''}</g>`;
+const A=(d,attr='',cls='arr flow')=>`<path d="${d}" class="${cls}" ${attr}/>`;
+
+const GR=(cx,cy,n,r,cls='f-nuc')=>Array.from({length:n},(_,j)=>{const a=j*2.4,d=r*(.25+.6*((j*37)%10)/10);return `<circle cx="${(cx+Math.cos(a)*d).toFixed(1)}" cy="${(cy+Math.sin(a)*d).toFixed(1)}" r="2.3" class="${cls}"/>`}).join('');
+
+/* ---------- leukocyte drawings (all drawn around 0,0) ---------- */
+const f1=n=>(+n).toFixed(1);
+const SUN=(n,RR,r,cls)=>Array.from({length:n},(_,j)=>{const a=j*2.39996,d=RR*Math.sqrt((j+.6)/n);return `<circle cx="${f1(Math.cos(a)*d)}" cy="${f1(Math.sin(a)*d)}" r="${f1(r)}" class="${cls}"/>`}).join('');
+const BODY=(r,f)=>`<g class="sh"><circle r="${r}" class="${f} rim"/></g>`;
+const NEU=(r,n=4)=>{const P=[];for(let i=0;i<n;i++){const t=(160+i*220/(n-1))*Math.PI/180,d=(.45+(i%2?.03:-.02))*r;P.push([d*Math.cos(t),d*Math.sin(t)+.04*r]);}
+  const lr=(n<=3?.27:n===4?.24:.2)*r;
+  return `${BODY(r,'f-cyto')}${SUN(22,r*.84,r*.045,'f-ngran')}<path d="M${P.map(p=>f1(p[0])+' '+f1(p[1])).join(' L')}" class="strand" stroke-width="${f1(r*.1)}"/>${P.map((p,i)=>`<ellipse cx="${f1(p[0])}" cy="${f1(p[1])}" rx="${f1(lr)}" ry="${f1(lr*(i%2?.82:.95))}" class="f-nuc"/>`).join('')}${O(0,0,r)}`};
+const EOS=r=>`${BODY(r,'f-cyto')}${SUN(20,r*.82,r*.105,'f-eos')}<path d="M${f1(-.3*r)} ${f1(-.05*r)} H${f1(.3*r)}" class="strand" stroke-width="${f1(r*.1)}"/><ellipse cx="${f1(-.33*r)}" cy="${f1(-.05*r)}" rx="${f1(.26*r)}" ry="${f1(.33*r)}" class="f-nuc"/><ellipse cx="${f1(.33*r)}" cy="${f1(-.05*r)}" rx="${f1(.26*r)}" ry="${f1(.33*r)}" class="f-nuc"/>${O(0,0,r)}`;
+const BAS=r=>`${BODY(r,'f-cyto')}<ellipse cx="${f1(-.25*r)}" cy="${f1(-.08*r)}" rx="${f1(.3*r)}" ry="${f1(.34*r)}" class="f-nuc" opacity=".7"/><ellipse cx="${f1(.27*r)}" cy="${f1(.06*r)}" rx="${f1(.3*r)}" ry="${f1(.32*r)}" class="f-nuc" opacity=".7"/>${SUN(17,r*.8,r*.125,'f-basg')}${O(0,0,r)}`;
+const BEAN=[['M',-.52,.02],['C',-.52,-.42,-.12,-.56,.2,-.5],['C',.5,-.44,.64,-.14,.56,.12],['C',.5,.34,.3,.42,.18,.3],['C',.1,.2,0,.12,-.12,.2],['C',-.26,.3,-.52,.36,-.52,.02]];
+const MONO=r=>`${BODY(r,'f-mono')}<path d="${BEAN.map(c=>c[0]+c.slice(1).map(v=>f1(v*r*1.15)).join(' ')).join(' ')}Z" class="f-nuc"/>${O(0,0,r)}`;
+const LYM=r=>`${BODY(r,'f-lymph')}<circle cx="${f1(.05*r)}" cy="${f1(.04*r)}" r="${f1(.74*r)}" class="f-nuc"/>${O(0,0,r)}`;
+const MACP=[['M',-1,-.1],['C',-1.05,-.6,-.5,-.95,0,-.9],['C',.3,-1.15,.8,-.9,.85,-.5],['C',1.2,-.3,1.1,.3,.8,.5],['C',.7,.95,.2,1.05,-.2,.85],['C',-.6,1.1,-1.1,.6,-1,-.1]];
+const MAC=r=>{const d=MACP.map(c=>c[0]+c.slice(1).map(v=>f1(v*r)).join(' ')).join(' ')+'Z';return `<path d="${d}" class="f-mac macs sh"/><path d="${d}" fill="url(#cellS)" pointer-events="none"/><ellipse cx="${f1(-.2*r)}" cy="${f1(.08*r)}" rx="${f1(.36*r)}" ry="${f1(.27*r)}" class="f-nuc" opacity=".75"/>`};
+const MAST=r=>`<g class="sh"><ellipse rx="${r}" ry="${f1(.78*r)}" class="f-cyto rim"/></g><g transform="scale(1 .78)">${SUN(18,r*.82,r*.11,'f-basg')}</g><circle r="${f1(.27*r)}" class="f-nuc"/>`;
+const GEN=r=>`<circle r="${r}" class="gcell"/><circle cx="${f1(.1*r)}" cy="${f1(-.05*r)}" r="${f1(.42*r)}" class="gnuc"/>`;
+const W=(fn,x,y,r,...a)=>`<g transform="translate(${x} ${y})">${fn(r,...a)}</g>`;
+const BAC=(x,y,rot=0)=>`<rect x="${x-8}" y="${y-3.5}" width="16" height="7" rx="3.5" class="f-bact" transform="rotate(${rot} ${x} ${y})"/>`;
+const HC=(k,x,y,r,inner)=>`<g data-t="${k}"><circle cx="${x}" cy="${y}" r="${r}" class="hc"/>${inner}</g>`;
+const MIG=(k,x,y,dx,dy,inner,gx,r=28,wy=180)=>`<g data-k="${k}" transform="translate(${x} ${y})"><g class="mig" style="--gx:${gx-x}px;--gy0:${wy-r-4-y}px;--gy1:${wy-y}px;--gy2:${wy+r+6-y}px;--dx:${dx}px;--dy:${dy}px">${inner}</g></g>`;
+/* endothelial cells along a vessel wall; gaps = [[x,width]] are widened spaces between cells */
+const ENDO=(y,gaps=[])=>{let cuts=[];for(let x=40;x<800;x+=64)if(!gaps.some(g=>Math.abs(g[0]-x)<36))cuts.push([x,3]);cuts=cuts.concat(gaps).sort((a,b)=>a[0]-b[0]);
+  let s='',x0=-10;cuts.concat([[815,0]]).forEach(([c,w])=>{const x1=c-w/2;if(x1-x0>4)s+=`<rect x="${f1(x0)}" y="${y-5}" width="${f1(x1-x0)}" height="10" rx="5" class="endc"/><ellipse cx="${f1((x0+x1)/2)}" cy="${y}" rx="8" ry="2.4" class="endo"/>`;x0=c+w/2;});return s;};
+/* chemotactic substance: densest at the source, thinning with distance */
+const CHEMO=(cx,cy,RR,ymin,lines=false,ymax=436)=>{let s='';
+  if(lines)for(let i=0;i<10;i++){const a=i*Math.PI/5+.2,sn=Math.sin(a);let t=1;if(cy+sn*RR<ymin)t=(ymin-cy)/(sn*RR);s+=`<path d="M${f1(cx)} ${f1(cy)} L${f1(cx+Math.cos(a)*RR*t)} ${f1(cy+sn*RR*t)}" class="chl"/>`;}
+  for(let j=0;j<240;j++){const a=j*2.39996,d=RR*Math.pow((j+.5)/240,1.5),x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d;if(y<ymin||x<4||x>796||y>ymax)continue;s+=`<circle cx="${f1(x)}" cy="${f1(y)}" r="1.8" class="chd"/>`;}
+  return s;};
+const DOTS=(pts,cls,r=4.5)=>pts.map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${cls} blink" style="animation-delay:${(i*.17).toFixed(2)}s"/>`).join('');
+const VESSEL=(y1=80,y2=180,split=false,gaps=[])=>`<rect x="0" y="0" width="800" height="440" class="f-tissue"/>${split?`<rect x="0" y="${y2}" width="222" height="${440-y2}" class="f-surf2"/><path d="M222 ${y2} V440" stroke="var(--line)" stroke-width="2" stroke-dasharray="8 6"/>`:''}<rect x="0" y="${y1}" width="800" height="${y2-y1}" fill="url(#lumG)"/><path d="M0 ${y1} H800" class="wall"/>${[40,170,310,450,590,730].map(x=>`<ellipse cx="${x}" cy="${y1}" rx="9" ry="3.2" class="endo"/>`).join('')}${ENDO(y2,gaps)}${[[90,120],[140,156],[230,105],[390,154],[520,106],[612,152],[700,112],[770,150]].map(([x,y])=>R(x,y,11)).join('')}${T(12,104,'Blood','t-s')}${split?T(12,206,'Bone marrow','t-s')+T(238,206,'Tissue','t-s'):T(12,206,'Tissue','t-s')}`;
+const GS=(inner,label,gaps=[])=>SV(VESSEL(80,180,false,gaps)+inner,'0 0 800 440',label);
+const GSM=(inner,label,gaps=[])=>SV(VESSEL(80,180,true,gaps)+inner,'0 0 800 440',label);
+
+const HEX=(x,y)=>{const p=[];for(let i=0;i<6;i++){const a=i*Math.PI/3;p.push(f1(x+13*Math.cos(a))+','+f1(y+13*Math.sin(a)));}let s='';for(let i=0;i<6;i++){const a=i*Math.PI/3+Math.PI/6;s+=`<path d="M${f1(x+12*Math.cos(a))} ${f1(y+12*Math.sin(a))} L${f1(x+19*Math.cos(a))} ${f1(y+19*Math.sin(a))}" stroke="var(--baso)" stroke-width="2.5" stroke-linecap="round"/>`;}return s+`<polygon points="${p.join(' ')}" class="f-baso"/>`};
+/* ---------- 1. What makes a leukocyte different ---------- */
+const M1A=GSM(`
+${K('chem',CHEMO(660,340,200,190))}
+${K('lr',T(580,58,'Erythrocytes work inside the blood vessels','t-c t-b'))}
+${K('w1',W(GEN,300,130,28))}
+${K('lw',`${T(300,44,'Leukocyte','t-c t-b')}${T(300,62,'no pigmented molecules','t-c t-s')}`)}
+${K('ratio',`<rect x="262" y="226" width="300" height="54" rx="10" class="box"/>${T(412,249,'1 leukocyte','t-c t-b')}${T(412,268,'for every 500 to 1000 erythrocytes','t-c t-s nocap')}`)}
+${K('mar',`<rect x="20" y="290" width="190" height="60" rx="10" class="box"/>${T(115,316,'Leukocytes','t-c t-b')}${T(115,335,'are formed here','t-c t-s')}<path d="M115 290 V190" class="arr"/>`)}
+${K('site',T(660,232,'Where they are needed','t-c t-b'))}
+${K('bugs',[[640,318,20],[668,340,-30],[696,314,60],[654,366,0],[708,358,40],[622,346,80]].map(a=>BAC(...a)).join('')+T(640,424,'Bacteria, viruses, fungi or parasites','t-c t-s'))}
+${MIG('wm',300,130,290,200,GEN(28),360)}
+${K('wend',W(GEN,590,330,28))}
+${K('w2',W(GEN,720,300,24))}${K('w3',W(GEN,745,372,24))}
+`,'Leukocytes travel in the blood to the tissues',[[360,14]]);
+
+const M1B=(()=>{let mg='',bg='';
+  for(let i=0;i<100;i++){const x=62+(i%10)*24,y=80+Math.floor(i/10)*21;mg+=i%4===3?`<circle cx="${x}" cy="${y}" r="8" class="f-rbc"/>`:`<circle cx="${x}" cy="${y}" r="8" class="f-cyto" stroke="var(--nuc)" stroke-width="1"/><circle cx="${x}" cy="${y}" r="3.5" class="f-nuc"/>`;}
+  for(let i=0;i<500;i++){const x=493+(i%25)*11,y=76+Math.floor(i/25)*10.5;bg+=i===213?`<circle cx="${x}" cy="${y}" r="4.5" class="f-surf" stroke="var(--nuc)" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="10" class="ring"/>`:`<circle cx="${x}" cy="${y}" r="4" class="f-rbc"/>`;}
+  const BR=(y,lab,k)=>`${T(30,y+12,lab,'t-b')}<rect x="270" y="${y}" width="500" height="14" rx="7" class="f-surf2" stroke="var(--line)"/><rect x="270" y="${y}" width="45" height="14" rx="7" class="f-nuc" data-t="${k}" data-max="500"/>`;
+  return SV(`
+<rect x="30" y="30" width="290" height="268" rx="14" class="box"/>${T(46,56,'Bone marrow','t-b')}
+<rect x="480" y="30" width="290" height="268" rx="14" class="box"/>${T(496,56,'Blood','t-b')}
+${K('mg',mg+T(175,318,'About 75%: white blood cells or their precursors','t-c t-s'))}
+${K('bg',bg+T(625,318,'Here: 1 leukocyte among 500 cells','t-c t-s'))}
+${K('flowA',`<path d="M328 164 H472" class="arr flow" style="stroke:var(--hl)"/>${T(400,150,'released','t-c t-s')}`)}
+${K('inf',T(400,120,'Serious infection','t-c warn-t'))}
+${K('pen',`${T(400,112,'Bone marrow','t-c warn-t')}${T(400,130,'activity reduced','t-c warn-t nocap')}`)}
+${K('bars',BR(345,'Leukocytes in the blood','bBl')+BR(385,'Leukocytes stored in marrow','bSt')+T(770,424,'Bar lengths are illustrative','t-s','text-anchor="end"'))}
+`,'0 0 800 440','Leukocytes in the bone marrow and in the blood');})();
+
+/* ---------- 2. The five types ---------- */
+const TX=[200,330,460,600,720],TR=[46,46,42,54,32],TF=[NEU,EOS,BAS,MONO,LYM],TN=['Neutrophil','Eosinophil','Basophil','Monocyte','Lymphocyte'],TS=['multi-lobed nucleus','orange-red granules','dark blue granules','kidney-shaped nucleus','non-granular'];
+const FN=(x,a,b)=>`<path d="M${x} 302 V316" class="brk"/>${T(x,336,a,'t-c t-b')}${T(x,354,b,'t-c t-s nocap')}`;
+const M2=SV(`
+${R(70,190,22)}${T(70,270,'Erythrocyte','t-c t-n')}${T(70,288,'for size','t-c t-s')}
+${K('ghost',TX.map((x,i)=>W(GEN,x,190,TR[i])).join(''))}
+${TX.map((x,i)=>HC('h'+i,x,190,TR[i]+8,K('c'+i,W(TF[i],x,190,TR[i])))).join('')}
+${TX.map((x,i)=>`<g data-k="lab${i}" class="lab">${T(x,270,TN[i],'t-c t-n')}${T(x,288,TS[i],'t-c t-s')}</g>`).join('')}
+${K('br1',`<path d="M150 114 V102 H506 V114" class="brk"/>${T(328,90,'Polymorphonuclear leukocytes (granulocytes)','t-c t-b')}`)}
+${K('br2',`<path d="M542 114 V102 H756 V114" class="brk"/>${T(649,90,'Non-granular leukocytes','t-c t-b')}`)}
+${K('fnN',FN(200,'Phagocytosis','of bacteria')+FN(600,'Phagocytosis','as a macrophage'))}
+${K('fnE',FN(330,'Toxic substances','against parasites')+FN(460,'Histamine','and heparin'))}
+${K('fnL',FN(720,'Antibodies','against intruders'))}
+${K('ves',`<rect x="150" y="380" width="508" height="44" rx="10" class="box"/>${T(404,407,'Vesicles: lysosomes, or vesicles emptied by exocytosis','t-c t-s')}`)}
+`,'0 0 800 440','The five types of leukocytes');
+
+/* ---------- 3. Production of leukocytes ---------- */
+const AR=(x1,y1,r1,x2,y2,r2)=>{const dx=x2-x1,dy=y2-y1,d=Math.hypot(dx,dy);return `<path d="M${f1(x1+dx/d*(r1+5))} ${f1(y1+dy/d*(r1+5))} L${f1(x2-dx/d*(r2+9))} ${f1(y2-dy/d*(r2+9))}" class="arr"/>`};
+const LS=[105,140,24],MS=[490,140,24],PY=345;
+const PROD=[['mo',290,MONO,29,'Monocyte'],['ne',375,NEU,26,'Neutrophil'],['eo',460,EOS,26,'Eosinophil'],['ba',545,BAS,24,'Basophil']];
+const LYMX=[['T',62,'T lymphocyte'],['B',168,'B lymphocyte']];
+const M3A=SV(`
+<rect x="0" y="0" width="800" height="185" class="f-surf2" opacity=".6"/>
+<path d="M0 185 H800" stroke="var(--line)" stroke-width="2" stroke-dasharray="8 6"/>${T(236,177,'Bone marrow','t-s')}${T(236,205,'Blood','t-s')}
+<rect x="12" y="198" width="206" height="230" rx="14" class="box"/>${T(115,222,'Lymphoid tissue','t-c t-b')}${T(115,240,'lymph nodes, spleen,','t-c t-s')}${T(115,256,'tonsils, thymus, intestines','t-c t-s nocap')}
+${K('stem',CELL(330,48,30,'f-stem',20)+`<circle cx="336" cy="42" r="5" class="nucleolus"/>`+T(372,44,'Pluripotent stem cell','t-n')+T(372,62,'having many potentials','t-s'))}
+${K('lymS',AR(330,48,30,...LS)+CELL(...LS,'f-baso2',16)+T(72,136,'Lymphoid','t-n','text-anchor="end"')+T(72,152,'stem cell','t-n nocap','text-anchor="end"'))}
+${K('myeS',AR(330,48,30,...MS)+CELL(...MS,'f-baso2',16)+T(522,118,'Myeloid stem cell','t-n'))}
+${LYMX.map(([k,x,name])=>HC('h'+k,x,PY,30,K(k,`<path d="M105 170 V190" class="arr"/>`+AR(115,262,0,x,PY,22)+W(LYM,x,PY,22)+`<g class="lab">${T(x,PY+48,name,'t-c t-n')}</g>`))).join('')}
+${PROD.map(([k,x,fn,r,name])=>HC('h'+k,x,PY,r+8,K(k,AR(...MS,x,PY,r)+W(fn,x,PY,r)+`<g class="lab">${T(x,PY+48,name,'t-c t-n')}</g>`))).join('')}
+${K('rb',AR(...MS,630,PY,20)+R(630,PY,20)+`<g class="lab">${T(630,PY+48,'Erythrocyte','t-c t-n')}</g>`)}
+${K('mk',AR(...MS,730,140,34)+`<g class="sh"><circle cx="730" cy="140" r="34" class="f-poly rim"/></g>${[[-10,-6],[6,-10],[12,6],[-4,10]].map(([a,b])=>`<circle cx="${730+a}" cy="${140+b}" r="11" class="f-nuc"/>`).join('')}${O(730,140,34)}<g class="lab">${T(730,96,'Megakaryocyte','t-c t-n')}</g>`)}
+${K('pl',`<path d="M732 178 V318" class="arr"/>${[[726,338],[744,332],[756,346],[734,352],[750,360],[722,356]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="6" ry="4" class="f-poly rim"/>`).join('')}<g class="lab">${T(740,PY+48,'Blood platelets','t-c t-n')}</g>`)}
+${K('lt',`<rect x="12" y="198" width="206" height="230" rx="14" class="ring"/>`)}
+`,'0 0 800 440','Production of leukocytes from stem cells');
+
+const BAR=(y,lab,k,col)=>`${T(266,y+12,lab,'t-b')}<rect x="370" y="${y}" width="110" height="14" rx="7" class="f-surf2" stroke="var(--line)"/><rect x="370" y="${y}" width="50" height="14" rx="7" class="${col}" data-t="b${k}" data-max="110"/>${T(544,y+12,'normal','t-s','text-anchor="end" data-t="v'+k+'"')}`;
+const M3B=SV(`
+${BX({x:290,y:30,w:220,h:58,t:'Infection',s:'or injured tissue',tk:'nTop'})}
+${BX({x:575,y:190,w:215,h:58,t:'Activated leukocytes',s:'and other cells in the tissue',tk:'nRight'})}
+${BX({x:290,y:352,w:220,h:58,t:'Bone marrow',s:'stem cells',tk:'nBot'})}
+${BX({x:10,y:190,w:215,h:58,t:'Defense cells',s:'mobilized and produced',tk:'nLeft'})}
+${A('M516 60 C620 60 682 110 682 184')}${T(694,124,'activates','t-s')}
+${A('M682 254 C682 340 610 380 516 380')}${T(694,330,'cytokines','t-s')}
+${A('M284 380 C190 380 118 340 118 254')}${T(20,330,'more cells','t-s')}
+${A('M118 184 C118 110 180 60 284 60')}${T(20,124,'remove the cause','t-s')}<circle cx="150" cy="98" r="13" class="box"/>${T(150,104,'−','t-c t-b nocap')}
+${K('cyt',[[682,270],[678,300],[666,328],[645,352],[615,368],[580,377],[545,380]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="6" class="f-epo blink" style="animation-delay:${i*.15}s"/>`).join(''))}
+<rect x="250" y="138" width="300" height="172" rx="14" class="box"/>
+${BAR(160,'Infection','Inf','f-bact')}${BAR(200,'Cytokines','Cyt','f-epo')}${BAR(240,'Leukocytes','Leu','f-nuc')}
+${T(400,292,'Healthy','t-c t-s','data-t="status"')}
+`,'0 0 800 440','Cytokines regulate leukocyte production');
+const BASE3={w:{bInf:.04,bCyt:.15,bLeu:.45},set:{vInf:'none',vCyt:'low',vLeu:'normal',status:'Healthy'}};
+
+/* ---------- 4. Granulocytes at work ---------- */
+const M4A=GSM(`
+${K('chem',CHEMO(670,340,200,190))}
+${K('store',`<rect x="20" y="255" width="185" height="125" rx="12" class="box"/>${T(112,278,'Bone marrow store','t-c t-b')}${[[55,312],[98,330],[140,308],[172,340],[70,354],[125,358]].map(([x,y])=>W(NEU,x,y,14)).join('')}<path d="M112 255 V190" class="arr"/>`)}
+${K('nV',W(NEU,300,130,28))}
+${K('tB',T(300,54,'In the blood: 4–8 hours','t-c t-b'))}
+${K('bac1',[[640,330,20],[672,352,-30],[700,326,60],[660,376,0],[712,368,40],[690,300,10]].map(a=>BAC(...a)).join('')+T(680,414,'Bacterial infection','t-c warn-t'))}
+${K('bac2',[[610,318,-20],[622,352,50],[600,372,10]].map(a=>BAC(...a)).join(''))}
+${MIG('nm',300,130,250,200,NEU(28),360)}
+${K('nAt',W(NEU,550,330,28))}
+${K('n2',W(NEU,748,300,24)+W(NEU,640,262,24))}
+${K('eat',BAC(545,342,30)+BAC(560,326,-40)+BAC(540,320,80))}
+${K('dead',`<circle cx="748" cy="300" r="24" class="deadc"/><circle cx="640" cy="262" r="24" class="deadc"/>${T(700,232,'Rapidly destroyed','t-c t-s')}`)}
+${K('more',`${W(NEU,186,128,24)+W(NEU,452,128,24)+W(NEU,566,132,24)}<path d="M112 255 V190" class="arr flow" style="stroke:var(--hl)"/>`)}
+${K('tT',T(360,414,'In the tissues: another 3–4 days','t-c t-b'))}
+${K('vir',[[640,320],[700,346],[606,370],[712,296],[660,384]].map(([x,y])=>HEX(x,y)).join('')+T(680,272,'Viral infection','t-c warn-t'))}
+${K('age',`${W(NEU,610,32,18,2)}${W(NEU,740,32,18,5)}<path d="M636 32 H712" class="arr"/>${T(675,24,'older','t-c t-s')}${T(675,66,'more lobes with age','t-c t-s')}`)}
+`,'A neutrophil leaves the blood to attack bacteria',[[360,14]]);
+
+const M4B=GS(`
+${K('chem',CHEMO(650,356,200,190))}
+${K('eV',W(EOS,300,130,28))}
+${K('bx',[[150,300,20],[185,322,-30],[160,346,60]].map(a=>BAC(...a)).join('')+T(170,382,'Bacteria: not their target','t-c t-s'))}
+${K('muc',T(790,206,'Mucosa of the gastro-intestinal tract','t-s','text-anchor="end"'))}
+${K('par',`<path d="M560 356 C580 328 600 384 620 356 C640 328 660 384 680 356 C700 328 720 384 740 356" class="worm"/><circle cx="558" cy="357" r="7" class="f-paras"/>${T(650,408,'Parasite','t-c t-b')}`)}
+${MIG('em',300,130,240,160,EOS(28),360)}
+${K('eAt',W(EOS,540,290,28)+W(EOS,706,292,24))}
+${K('tox',DOTS([[556,324],[574,334],[694,322],[680,332],[606,326],[644,330]],'f-eos',4)+T(622,252,'Toxic substances from the vesicles','t-c t-s'))}
+${K('tr',T(380,428,'Also abundant in the respiratory and urinary tracts','t-c t-s'))}
+${K('eMore',W(EOS,186,128,24)+W(EOS,452,128,24)+W(EOS,566,132,24)+T(300,54,'More eosinophils in the blood','t-c t-b'))}
+`,'An eosinophil attacks a parasite',[[360,14]]);
+
+const M4C=GS(`
+${K('bV',W(BAS,300,130,27)+T(300,54,'Basophil','t-c t-b'))}
+${K('vs',`<rect x="420" y="26" width="290" height="40" rx="20" class="box"/>${T(565,51,'Vesicles: histamine and heparin','t-c t-b')}`)}
+${K('mast',W(MAST,470,232,32)+T(514,228,'Mast cell','t-b')+T(514,246,'in tissue, next to capillaries','t-s'))}
+${K('hist',DOTS([[336,104],[344,152],[262,110],[266,154],[300,92],[430,204],[512,270],[436,268],[470,282],[300,168]],'f-hist')+T(580,310,'Histamine and other substances','t-c t-s')+T(580,334,'Allergic reaction','t-c warn-t'))}
+${K('hep',`<rect x="20" y="262" width="372" height="96" rx="12" class="box"/>${T(36,286,'Heparin','t-b')}${T(36,306,'A sulfated polysaccharide','t-s')}${T(36,324,'Cofactor for the enzyme lipoprotein lipase','t-s')}${T(36,342,'Helps remove lipids from the blood after a fatty meal','t-s')}`)}
+${K('coag',`<rect x="20" y="368" width="372" height="60" rx="12" class="box"/>${T(36,392,'High concentrations inhibit coagulation','t-b')}${T(36,412,'Plasma level probably too low to matter normally','t-s')}`)}
+`,'Basophils and mast cells');
+
+/* ---------- 5. Monocyte to macrophage ---------- */
+const M5A=GS(`
+${K('chem',CHEMO(600,320,190,190))}
+${K('mV',W(MONO,300,130,30))}
+${K('tB',T(250,54,'Monocyte: in the blood for only a few hours','t-c t-b'))}
+${K('cmp',W(NEU,566,132,26)+T(640,44,'Neutrophil: mature','t-c t-b')+T(640,62,'can destroy bacteria once released','t-c t-s'))}
+${MIG('mm',300,130,120,190,MONO(30),340,30)}
+<g data-k="mac" transform="translate(420 315)"><g class="grow">${MAC(80)}</g></g>
+${K('x100',T(170,296,'Size increases','t-c t-b')+T(170,316,'up to 100-fold','t-c t-b nocap')+T(170,348,'Macrophage','t-c t-l')+T(170,374,'Drawing not to scale','t-c t-s nocap'))}
+${K('bac',[[566,290,20],[596,322,-30],[580,356,60],[628,296,0],[646,346,40]].map(a=>BAC(...a)).join(''))}
+${K('eat',BAC(462,282,30)+BAC(474,334,-40)+BAC(438,362,80)+BAC(380,282,10))}
+${K('yrs',T(650,400,'Stationary macrophages','t-c t-b')+T(650,420,'can survive in the tissues for several years','t-c t-s'))}
+`,'A monocyte becomes a macrophage',[[340,14]]);
+
+const M5B=SV(`
+${T(20,30,'Gateway 1: the digestive tract','t-b')}
+<rect x="20" y="50" width="150" height="124" rx="14" class="f-mucosa" opacity=".5"/>${T(95,100,'Intestine','t-c t-b')}${T(95,120,'mucous membrane','t-c t-s')}${T(95,136,'barrier','t-c t-s nocap')}
+<path d="M176 112 H336" class="ves-v"/>${T(256,88,'Portal vein','t-c t-s')}
+<rect x="340" y="42" width="250" height="142" rx="22" class="f-kid" opacity=".3"/>${T(465,66,'Liver','t-c t-b')}
+<path d="M346 112 H584" class="ves-v"/>
+<path d="M596 112 H776" class="ves-a"/>${T(690,88,'Systemic circulation','t-c t-s')}
+${[[395,96],[465,128],[535,96]].map(([x,y])=>W(MAC,x,y,15)).join('')}
+${K('kl',T(465,170,'Kupffer cells: on the capillary walls','t-c t-s'))}
+${K('b1',[[120,154,10],[152,112,-20],[205,110,20],[250,116,-10],[300,110,30]].map(a=>BAC(...a)).join(''))}
+${K('b2',[[352,112,0],[428,112,25],[500,110,-25],[562,114,10]].map(a=>BAC(...a)).join(''))}
+${K('b3',BAC(395,97,30)+BAC(464,130,-30)+BAC(536,97,60)+BAC(470,124,10))}
+${K('b4',BAC(650,112,15)+T(690,146,'Only very few get through','t-c t-s'))}
+<path d="M20 215 H780" stroke="var(--line)" stroke-width="2" stroke-dasharray="8 6"/>
+${T(20,250,'Gateway 2: the airways','t-b')}
+<path d="M40 330 H336" stroke="var(--lumen)" stroke-width="34"/><path d="M40 313 H334 M40 347 H334" class="tick"/>${T(120,300,'Airways','t-s')}
+<circle cx="420" cy="330" r="88" class="alv"/>${T(412,338,'Pulmonary alveolus','t-c t-s')}
+${[[372,374],[476,290],[506,346]].map(([x,y])=>W(MAC,x,y,14)).join('')}
+${K('al',T(546,322,'Alveolar macrophages','t-b')+T(546,342,'attached to, and within,','t-s')+T(546,358,'the walls of the alveoli','t-s nocap'))}
+${K('a1',[[90,330,10],[170,326,-20],[250,334,20],[330,330,0],[396,366,30],[440,304,-30]].map(a=>BAC(...a)).join(''))}
+${K('a2',BAC(372,375,30)+BAC(476,291,-30)+BAC(506,347,60))}
+`,'0 0 800 440','Stationary macrophages at two gateways');
+
+/* ---------- 6. Lymphocytes on patrol ---------- */
+const MK=(k,x,y)=>K(k,`<circle cx="${x}" cy="${y}" r="25" class="ring"/>`+W(LYM,x,y,16));
+const M6A=SV(`
+${T(125,84,'Lymphoid tissue','t-c t-b')}${T(125,102,'lymph nodes, spleen, thymus','t-c t-s')}
+<ellipse cx="125" cy="220" rx="78" ry="100" class="f-stem sh"/>${[[95,160],[148,156],[170,205],[84,212],[164,256],[98,278],[142,296],[70,252]].map(([x,y])=>W(LYM,x,y,11)).join('')}
+<path d="M192 162 C225 110 270 86 318 72" class="ves-l"/><path d="M322 71 C410 40 520 70 588 148" class="ves-a"/>
+<rect x="590" y="120" width="190" height="210" rx="16" class="box"/>${T(685,146,'Tissues','t-c t-b')}
+${[[610,164],[692,164],[610,244],[692,244]].map(([x,y])=>`<rect x="${x}" y="${y}" width="70" height="62" rx="12" class="cellb"/><ellipse cx="${x+35}" cy="${y+31}" rx="12" ry="9" class="f-nuc" opacity=".45"/>`).join('')}
+<path d="M588 304 C480 410 300 410 198 288" class="ves-l"/>
+${A('M196 158 C228 108 272 84 318 72')}${A('M326 70 C412 42 518 72 582 144')}${A('M582 308 C478 410 304 410 202 292')}
+${T(272,146,'Lymph','t-s')}${T(456,30,'Blood','t-c t-s')}${T(400,424,'Lymph vessels','t-c t-s')}
+${MK('p0',125,226)}${MK('p1',254,104)}${MK('p2',456,58)}${MK('p3',685,236)}${MK('p4',400,384)}
+${K('tH',T(456,106,'In the blood: only a few hours','t-c t-b'))}
+${K('tP',T(392,222,'Continuously patrolling','t-c t-l')+T(392,248,'the tissues','t-c t-l nocap'))}
+${K('tY',T(392,290,'Certain lymphocytes can survive for years','t-c t-s'))}
+`,'0 0 800 440','Lymphocytes circulate between lymphoid tissue, blood and tissues');
+
+const MIC=[(x,y)=>BAC(x-9,y+2,20)+BAC(x+8,y+8,-30)+BAC(x+2,y-9,70),(x,y)=>[[-8,-7],[8,-7],[0,7],[-15,7],[15,7]].map(([a,b])=>`<circle cx="${x+a}" cy="${y+b}" r="7" class="f-bact"/>`).join(''),HEX];
+const MY=[124,205,286],MNAME=['Bacterium, type 1','Bacterium, type 2','Virus'];
+const MLAB=x=>MY.map((y,i)=>T(x,y+34,MNAME[i],'t-c t-s nocap')).join('');
+const ABY=(x,y,rot)=>`<path d="M0 10 V0 L-6 -8 M0 0 L6 -8" class="aby" transform="translate(${x} ${y}) rotate(${rot})"/>`;
+const M6B=SV(`
+<rect x="20" y="36" width="370" height="336" rx="16" class="box"/>${T(205,64,'Neutrophil or macrophage','t-c t-b')}
+${W(NEU,84,150,30)}${W(MAC,84,264,34)}${MIC.map((f,i)=>f(326,MY[i])).join('')}${MLAB(326)}
+<rect x="410" y="36" width="370" height="336" rx="16" class="box"/>${T(595,64,'Lymphocyte','t-c t-b')}
+${W(LYM,484,205,30)}${MIC.map((f,i)=>f(716,MY[i])).join('')}${MLAB(716)}
+${K('aAny',`<path d="M136 184 L292 128" class="arr"/><path d="M140 205 H292" class="arr"/><path d="M136 226 L292 282" class="arr"/>${T(205,352,'Can attack any type of bacteria or virus','t-c t-s')}`)}
+${K('aOne',`<path d="M522 205 H682" class="arr"/>${T(595,352,'Only the target it is programmed for','t-c t-s')}`)}
+${K('no',`<path d="M518 188 L682 128" class="arr dash" opacity=".45"/><path d="M518 222 L682 282" class="arr dash" opacity=".45"/>${T(600,150,'✕','t-c warn-t')}${T(600,274,'✕','t-c warn-t')}`)}
+${K('ca',T(484,264,'Also against','t-c t-s')+T(484,280,'cancer cells','t-c t-s nocap'))}
+${K('adapt',`<rect x="150" y="386" width="500" height="42" rx="21" class="box" style="stroke:var(--accent);stroke-width:2.5"/>${T(400,413,'Basis of the adaptive (acquired) immune defense','t-c t-b')}`)}
+${K('ab',ABY(560,186,70)+ABY(604,190,95)+ABY(646,184,80)+T(602,238,'Antibodies','t-c t-s'))}
+`,'0 0 800 440','What neutrophils, macrophages and lymphocytes can attack');
+
+/* ---------- Diapedesis and chemotaxis ---------- */
+const DW=160,DGX=[300,380,460],DF=[NEU,MONO,NEU],DR=[16,18,16],DFL=[[170,108],[262,96],[352,118]],SRC=[610,340];
+const DMY=i=>DW-DR[i]-6, DOY=i=>DW+DR[i]+8;
+const DPT=(i,f)=>[DGX[i]+(SRC[0]-DGX[i])*f,DOY(i)+(SRC[1]-DOY(i))*f],DFR=[.56,.62,.6];
+const SLIDE=(x,y,sx,sy,inner,d=0)=>`<g transform="translate(${f1(x)} ${f1(y)})"><g class="slide" style="--sx:${f1(sx)}px;--sy:${f1(sy)}px;animation-delay:${d}s">${inner}</g></g>`;
+const M_DIA=SV(`
+<rect x="0" y="0" width="800" height="440" class="f-tissue"/>
+<rect x="0" y="60" width="800" height="${DW-60}" fill="url(#lumG)"/><path d="M0 60 H800" class="wall"/>
+${[40,170,310,450,590,730].map(x=>`<ellipse cx="${x}" cy="60" rx="9" ry="3.2" class="endo"/>`).join('')}
+${[[60,92],[118,136],[214,128],[440,82],[540,138],[620,94],[700,132],[770,96]].map(([x,y])=>R(x,y,11)).join('')}
+${T(12,84,'Blood','t-s')}${T(12,188,'Tissue','t-s')}
+${K('chem',CHEMO(...SRC,260,DW+10,true)+`<path d="M470 404 V410 H750 V404" class="brk"/>`+T(610,428,'Chemotactic substance','t-c t-s'))}
+${K('src',[[596,330,20],[620,326,-30],[612,352,60],[630,346,10],[592,350,-10]].map(a=>BAC(...a)).join('')+`<rect x="536" y="364" width="148" height="24" rx="12" class="elb"/>`+T(610,381,'Chemotaxis source','t-c t-b'))}
+${K('wN',ENDO(DW,[]))}
+${K('wW',ENDO(DW,DGX.map(x=>[x,16]))+DGX.map(x=>`<circle cx="${x}" cy="${DW}" r="10" class="ring blink"/>`).join(''))}
+${K('perm',`<path d="M556 198 L472 166" class="tick"/>`+T(560,204,'Increased permeability','t-b'))}
+${K('flow',DFL.map(([x,y],i)=>W(DF[i],x,y,DR[i])).join(''))}
+${K('marg',DGX.map((x,i)=>SLIDE(x,DMY(i),DFL[i][0]-x,DFL[i][1]-DMY(i),DF[i](DR[i]),i*.25)).join('')+`<path d="M282 56 V48 H478 V56" class="brk"/>`+T(380,38,'Margination','t-c t-b'))}
+${K('dia',DGX.map((x,i)=>`<g transform="translate(${x} ${DMY(i)})"><g class="thru" style="--gy1:${DR[i]+6}px;--gy2:${2*DR[i]+14}px;animation-delay:${(i*.45).toFixed(2)}s">${DF[i](DR[i])}</g></g>`).join('')+'')}
+${K('diaL',`<path d="M246 200 L290 172" class="tick"/>`+T(206,212,'Diapedesis','t-c t-b'))}
+${K('zoom',`<rect x="20" y="226" width="250" height="204" rx="12" class="box"/>${T(145,248,'Close-up','t-c t-b')}
+<rect x="32" y="262" width="226" height="56" fill="url(#lumG)"/>
+<rect x="34" y="318" width="96" height="22" rx="11" class="endc"/><rect x="160" y="318" width="96" height="22" rx="11" class="endc"/>
+<ellipse cx="82" cy="329" rx="14" ry="4" class="endo"/><ellipse cx="208" cy="329" rx="14" ry="4" class="endo"/>
+<g class="sh"><circle cx="145" cy="294" r="21" class="f-cyto rim"/><rect x="137" y="300" width="16" height="56" class="f-cyto"/><circle cx="145" cy="360" r="15" class="f-cyto rim"/></g>
+<ellipse cx="139" cy="292" rx="7" ry="6" class="f-nuc"/><ellipse cx="152" cy="300" rx="6" ry="5" class="f-nuc"/><ellipse cx="145" cy="331" rx="4" ry="8" class="f-nuc"/><ellipse cx="145" cy="362" rx="6" ry="5" class="f-nuc"/>
+${T(78,358,'Endothelial cell','t-c t-s')}${T(212,358,'Endothelial cell','t-c t-s')}
+${T(145,398,'Squeezing through the space','t-c t-s')}${T(145,414,'between two endothelial cells','t-c t-s nocap')}`)}
+${K('arw',DGX.map((x,i)=>{const [ex,ey]=DPT(i,DFR[i]-.12);return `<path d="M${x} ${DOY(i)+DR[i]+6} L${f1(ex)} ${f1(ey)}" class="arr"/>`;}).join('')+T(330,300,'Chemotaxis','t-c t-b'))}
+${K('chx',DGX.map((x,i)=>{const [px,py]=DPT(i,DFR[i]);return SLIDE(px,py,x-px,DOY(i)-py,DF[i](DR[i]),i*.2);}).join(''))}
+${K('pha',(()=>{const [a,b]=DPT(0,DFR[0]),[c,d]=DPT(2,DFR[2]);return BAC(a+3,b+2,30)+BAC(c-2,d+3,-40)+W(MAC,690,292,34)+BAC(684,286,20)+BAC(700,302,-50)+T(690,244,'Macrophage','t-c t-b')+T(690,262,'phagocytosis','t-c t-s');})())}
+${K('ops',`<rect x="20" y="226" width="250" height="204" rx="12" class="box" style="stroke:var(--accent);stroke-width:2.5"/>${T(145,248,'Opsonization','t-c t-b')}
+${W(NEU,78,326,44)}<rect x="160" y="312" width="64" height="26" rx="13" class="f-bact"/>
+${ABY(192,298,180)}${ABY(192,352,0)}${ABY(146,325,90)}${ABY(238,325,-90)}${ABY(172,300,160)}${ABY(214,350,-20)}
+<path d="M124 286 C150 270 170 274 184 290" class="arr"/>${T(196,278,'Antibodies','t-c t-s')}
+${T(145,398,'Antibodies help the phagocyte','t-c t-s')}${T(145,414,'select and engulf the bacterium','t-c t-s nocap')}`)}
+`,'0 0 800 440','Leukocytes leave the blood by diapedesis and move to the site of infection by chemotaxis');
+
+/* ---------- Inflammation: steps (wound, macrophage, mast cells, capillary) ---------- */
+const IW=290,IGX=[470,560,650],IF=[MONO,NEU,NEU],IR=[18,16,16],IFL=[[390,336],[505,346],[600,334]];
+const IST=i=>IW+5+IR[i]+3, IUP=i=>IW-5-IR[i]-5, IEND=[[470,175],[560,190],[650,196]];
+const SQS=(pts,cls)=>pts.map(([x,y],i)=>`<rect x="${x-3}" y="${y-3}" width="6" height="6" class="${cls} blink" style="animation-delay:${(i*.13).toFixed(2)}s"/>`).join('');
+const SKIN=(()=>{let c='';for(let r=0;r<4;r++)for(let k=0;k<17;k++){const x=k*50+(r%2?25:0)-20,y=r*22+3;if(x>540&&x<640)continue;c+=`<rect x="${x}" y="${y}" width="46" height="19" rx="7" class="skc"/><circle cx="${x+23}" cy="${y+9.5}" r="3" class="endo"/>`;}
+  return `<rect x="0" y="0" width="800" height="92" class="f-skin"/>${c}<path d="M562 0 L600 92 L638 0 Z" class="f-tissue"/><path d="M562 0 L600 92 L638 0" fill="none" stroke="var(--line)" stroke-width="2"/>`;})();
+const IBAC=[[600,26,70],[592,50,60],[604,74,80],[572,108,10],[624,106,-30],[600,128,40],[642,132,0],[548,134,-20],[628,152,60],[586,154,20],[690,160,-10],[232,128,20],[198,112,-10]];
+const M_INF1=SV(`
+<rect x="0" y="0" width="800" height="440" class="f-tissue"/>
+${SKIN}${T(12,112,'Tissue','t-s')}
+${K('vN',`<rect x="0" y="${IW}" width="800" height="80" fill="url(#lumG)"/><path d="M0 372 H800" class="wall"/>`)}
+${K('vD',`<rect x="0" y="${IW}" width="800" height="80" fill="url(#lumG)"/><path d="M0 372 H800" class="wall"/>`+[[110,350],[190,320],[270,358],[350,328],[410,356],[525,358],[608,354],[700,350]].map(([x,y])=>R(x,y,11)).join('')+T(400,428,'Local arterioles dilated: more blood arrives','t-c t-b'))}
+${[[70,330],[150,352],[230,326],[300,350],[450,358],[740,330]].map(([x,y])=>R(x,y,11)).join('')}
+${K('wN',ENDO(IW,[]))}
+${K('wW',ENDO(IW,IGX.map(x=>[x,16]))+IGX.map(x=>`<circle cx="${x}" cy="${IW}" r="10" class="ring blink"/>`).join('')+T(790,396,'Capillary pores widened','t-b','text-anchor="end"'))}
+${T(12,312,'Capillary','t-s')}
+${K('chem',CHEMO(600,140,240,98,false,280))}
+${K('bac',IBAC.map(a=>BAC(...a)).join('')+`<rect x="682" y="100" width="110" height="40" rx="10" class="elb"/>`+T(737,116,'Bacteria at','t-c t-b')+T(737,132,'the injury site','t-c t-s nocap'))}
+${K('mac1',W(MAC,110,170,34)+T(110,224,'Resident macrophage','t-c t-n'))}
+${K('eat1',BAC(106,164,30)+BAC(122,180,-40))}
+${K('cyt',SQS([[156,140],[166,182],[150,206],[182,160],[188,200],[62,206],[70,128],[204,182]],'f-epo')+T(110,250,'Cytokines and chemotaxins','t-c t-s'))}
+${K('mast',W(MAST,282,190,24)+W(MAST,346,222,24)+T(314,152,'Mast cells','t-c t-n'))}
+${K('hist',DOTS([[270,224],[300,232],[284,252],[318,258],[338,256],[372,252],[360,270],[300,272],[388,232],[262,252]],'f-hist',3.5)+T(314,284,'Histamine','t-c t-s'))}
+${K('flow',IFL.map(([x,y],i)=>W(IF[i],x,y,IR[i])).join(''))}
+${K('stick',IGX.map((x,i)=>SLIDE(x,IST(i),IFL[i][0]-x,IFL[i][1]-IST(i),IF[i](IR[i]),i*.2)).join('')+T(330,396,'Neutrophils and monocytes sticking to the wall','t-c t-s'))}
+${K('thru',IGX.map((x,i)=>`<g transform="translate(${x} ${IST(i)})"><g class="thru" style="--gy1:${-(IR[i]+8)}px;--gy2:${IUP(i)-IST(i)}px;animation-delay:${(i*.4).toFixed(2)}s">${IF[i](IR[i])}</g></g>`).join('')+T(418,276,'Diapedesis','t-c t-b'))}
+${K('go',IGX.map((x,i)=>SLIDE(IEND[i][0],IEND[i][1],x-IEND[i][0],IUP(i)-IEND[i][1],i?IF[i](IR[i]):'',i*.2)).join('')+IGX.map((x,i)=>AR(x,IW-8,0,IEND[i][0],IEND[i][1],i?IR[i]:32)).join(''))}
+${K('monoGo',SLIDE(...IEND[0],IGX[0]-IEND[0][0],IUP(0)-IEND[0][1],MONO(18)))}
+${K('mac2',`<g transform="translate(${IEND[0][0]} ${IEND[0][1]})"><g class="grow">${MAC(32)}</g></g>`+BAC(464,168,20)+BAC(480,182,-40)+T(470,116,'Monocyte enlarged','t-c t-n')+T(470,131,'into a macrophage','t-c t-s nocap'))}
+${K('kill',BAC(556,186,30)+BAC(646,194,-30)+T(790,236,'Neutrophils engulf','t-n','text-anchor="end"')+T(790,252,'and destroy bacteria','t-s nocap','text-anchor="end"'))}
+${K('sys',`<path d="M110 134 V68" class="arr"/><rect x="10" y="8" width="210" height="54" rx="10" class="box"/>${T(115,30,'Cytokines also act','t-c t-n')}${T(115,48,'beyond the site','t-c t-s nocap')}`)}
+`,'0 0 800 440','Steps producing inflammation at a wound');
+
+/* ---------- Inflammation: signs and outcomes flowchart ---------- */
+const FB=(x,y,w,h,lines,cls='box')=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" class="${cls}"/>`+lines.map((l,i)=>T(x+w/2,y+h/2+5-(lines.length-1)*8+i*16,l,'t-c t-n'+(i?' nocap':''))).join('');
+const BURST=(x,y,l)=>{const p=[];for(let i=0;i<28;i++){const a=i*Math.PI/14,r=i%2?26:40;p.push(f1(x+r*Math.cos(a))+','+f1(y+r*.78*Math.sin(a)));}return `<polygon points="${p.join(' ')}" class="burst"/>${T(x,y+5,l,'t-c t-n','style="fill:#fff"')}`;};
+const M_INF2=SV(`
+${K('f0',FB(290,8,220,42,['Bacterial invasion','or tissue damage'],'box trig')+`<path d="M400 50 V62" class="arr"/>`+FB(290,68,220,42,['Release of histamine','by mast cells'],'box histb')+W(MAST,250,88,18))}
+${K('fL',`<path d="M400 110 V120 H190 V132" class="arr"/>`+FB(90,138,200,42,['Local arteriolar','vasodilation'])+`<path d="M190 180 V194" class="arr"/>`+FB(90,200,200,42,['Increased blood delivery','to injured tissue'])+BURST(118,290,'Redness')+BURST(252,290,'Heat'))}
+${K('fR',`<path d="M400 110 V120 H610 V132" class="arr"/>`+FB(510,138,200,42,['Increased local','capillary permeability'])+`<path d="M610 180 V194" class="arr"/>`+FB(510,200,200,42,['Local accumulation','of fluid'])+BURST(548,290,'Swelling')+BURST(682,290,'Pain'))}
+${K('fP',`<path d="M190 242 V324" class="arr"/><path d="M510 236 C420 250 360 300 296 348" class="arr"/>`+FB(90,330,200,48,['Increase in plasma proteins,','such as clotting factors, in tissue']))}
+${K('fH',`<path d="M610 242 V324" class="arr"/><path d="M290 236 C380 250 440 300 504 348" class="arr"/>`+FB(510,330,200,48,['Increase in phagocytes','in tissue']))}
+${K('fO',`<path d="M685 378 V386" class="arr"/>`+FB(590,392,190,40,['Phagocytic secretions'],'box')+`<path d="M720 432 V460" class="arr"/>`+FB(590,466,190,46,['Systemic responses,','such as fever'],'box sysb')+
+ `<path d="M260 378 V480 H274" class="arr"/><path d="M540 378 V478 H516" class="arr"/><path d="M590 412 H560 V496 H516" class="arr"/>`+FB(280,462,230,50,['Defense against foreign','invader; tissue repair'],'box trig'))}
+${K('fB',FB(20,424,224,88,['In a blood sample:','leukocytosis and an increased','sedimentation rate. Like fever,','they are non-specific indicators'],'box ring'))}
+`,'0 0 800 520','Signs and outcomes of inflammation');
+
+/* ---------- concept map builder ---------- */
+function mapSVG(nodes,edges,H=440){
+  const N={};
+  nodes.forEach(n=>{const [ti,...su]=n.l.split('\n');n.L=[...ti.split('|').map(s=>({s,b:1})),...su.map(s=>({s,b:0}))];n.name=n.L.map(o=>o.s).join(' ');n.w=Math.max(...n.L.map(o=>o.s.length*(o.b?8.4:6.8)))+28;n.h=n.L.length*18+18;N[n.id]=n;});
+  const clip=(n,dx,dy)=>{const tx=dx?(n.w/2+3)/Math.abs(dx):1e9,ty=dy?(n.h/2+3)/Math.abs(dy):1e9,t=Math.min(tx,ty);return[n.x+dx*t,n.y+dy*t]};
+  let es='',ls='';
+  edges.forEach(([a,b,lab,dash,fr=.5])=>{const P=N[a],Q=N[b];let dx=Q.x-P.x,dy=Q.y-P.y;const d=Math.hypot(dx,dy);dx/=d;dy/=d;
+    const [x1,y1]=clip(P,dx,dy),[x2,y2]=clip(Q,-dx,-dy);
+    es+=`<path d="M${x1.toFixed(1)} ${y1.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}" class="arr ${dash?'dash':''}" data-t="e_${a}_${b}"/>`;
+    if(lab){const mx=x1+(x2-x1)*fr,my=y1+(y2-y1)*fr,w=lab.length*6.3+14;ls+=`<g><rect x="${(mx-w/2).toFixed(1)}" y="${(my-10).toFixed(1)}" width="${w.toFixed(1)}" height="20" rx="6" class="elb"/>${T(mx.toFixed(1),(my+4).toFixed(1),lab,'t-c t-e')}</g>`}});
+  const ns=nodes.map(n=>{const y0=n.y-(n.L.length-1)*9;return `<g class="node ${n.c||''}" data-node="${n.id}" data-t="n_${n.id}" tabindex="0" role="button" aria-label="${n.name}"><rect x="${(n.x-n.w/2).toFixed(1)}" y="${(n.y-n.h/2).toFixed(1)}" width="${n.w.toFixed(1)}" height="${n.h}" rx="12" class="nb"/><g class="nl">${n.L.map((o,j)=>T(n.x,(y0+j*18+5).toFixed(1),o.s,'t-c '+(o.b?'t-b':'t-s2')+(o.b&&j?' nocap':''))).join('')}</g>${T(n.x,n.y+7,'?','t-c t-l nq')}</g>`}).join('');
+  return SV(es+ls+ns,`0 0 800 ${H}`,'Concept map');
+}
+const MAPX=`<div class="row"><label class="toggle"><input type="checkbox" id="mq"> Hide labels for a quiz, then click boxes to reveal</label></div><div class="info" id="mapInfo"><p>Click any box to see the details.</p></div>`;
+function mapInit(){const q=$('#mq');if(q)q.onchange=e=>$('#stage').classList.toggle('quiz',e.target.checked);}
+function mapClicks(m,root){
+  root.querySelectorAll('[data-node]').forEach(g=>{
+    const act=()=>{
+      const id=g.dataset.node;
+      if($('#stage').classList.contains('quiz')&&!g.classList.contains('rev')){g.classList.add('rev');return;}
+      if(m.onNode&&m.onNode(id,g,root))return;
+      const n=m.nodes.find(x=>x.id===id);
+      root.querySelectorAll('.node.sel').forEach(x=>x.classList.remove('sel'));g.classList.add('sel');
+      $('#mapInfo').innerHTML=`<h3>${n.name}</h3><p>${n.i}</p>`;
+    };
+    g.addEventListener('click',act);
+    g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}});
+  });
+}
+
+
+/* ---------- reference values ---------- */
+const T95=[['Man','3–11',[55,4,1,5,35]],['Horse','5–12',[60,5,.5,4,30]],['Cow','4–9',[35,8,.1,4,53]],['Pig','11–22',[45,2,1,2,50]],['Dog','6–18',[70,3,.5,3,23]],['Sheep','3–11',[30,3,.5,5,62]],['Hen','20–30',[30,6,2.5,5,57]]];
+const pct=v=>v<1||v===2.5?String(v):(v===1?'1.0':String(v));
+
+/* ---------- 9. Who am I? map ---------- */
+const WHO_NODES=[
+ {id:'root',x:400,y:45,l:'Leukocytes\nwhite blood cells',c:'k-root',i:'Leukocytes lack pigmented molecules such as hemoglobin. They are larger than erythrocytes, and they have a nucleus and the usual cell organelles. There are five types, classified by the shape of the nucleus, the numbers and types of vesicles, and the site of production.'},
+ {id:'gran',x:215,y:135,l:'Granulocytes\npolymorphonuclear leukocytes',c:'k-high',i:'Three types have multi-lobed nuclei of varying shapes, and many vesicles that give the stained cytoplasm a granular appearance. They are formed only in the bone marrow, circulate in the blood for 4–8 hours, and then live for another 3–4 days in the peripheral tissues.'},
+ {id:'nong',x:610,y:135,l:'Non-granular leukocytes\nvesicles do not stain',c:'k-low',i:'The vesicles of two leukocyte types do not stain when treated with standard dyes. These cells are often called non-granular leukocytes: monocytes and lymphocytes.'},
+ {id:'neu',x:75,y:250,l:'Neutrophils',c:'k-high',i:'In the dog (70%) and the horse (60%), neutrophils represent more than 50% of the leukocytes; in the cow, pig and sheep, lymphocytes are more numerous. Neutrophils are particularly efficient in combating bacterial infections: large numbers migrate to the infected area, attack the bacteria, and are rapidly destroyed in the process. During viral infections, their number in the blood may be reduced.'},
+ {id:'eos',x:215,y:250,l:'Eosinophils',c:'k-high',i:'Eosinophils have negligible ability to phagocytize bacteria. They migrate to areas invaded by parasites and to sites of allergic reactions, and they kill parasites by releasing toxic substances stored in their vesicles. They are particularly abundant in the mucosa of the gastro-intestinal tract, and in the respiratory and urinary tracts.'},
+ {id:'bas',x:355,y:250,l:'Basophils',c:'k-high',i:'Basophils possess vesicles that contain, among other substances, histamine and heparin. Histamine and the other substances released from basophils and mast cells are largely responsible for most allergic reactions.'},
+ {id:'mono',x:540,y:250,l:'Monocytes',c:'k-low',i:'Monocytes have a kidney-shaped nucleus and are larger than lymphocytes. They remain in the bloodstream for only a few hours. They are immature cells that have no ability to fight infections until they enter the tissues.'},
+ {id:'lym',x:700,y:250,l:'Lymphocytes',c:'k-low',i:'Most lymphocytes are located in lymphoid tissue. They continuously patrol the tissues, and each one can only attack the targets for which it is particularly programmed. This is the basis of the adaptive (acquired) immune defense. Certain lymphocytes can survive for years.'},
+ {id:'mast',x:355,y:370,l:'Mast cells\nin tissues',c:'k-iron',i:'Mast cells are present in tissues, primarily adjacent to capillaries. Basophils resemble them. Histamine and the other substances released from basophils and mast cells are largely responsible for most allergic reactions.'},
+ {id:'mac',x:540,y:370,l:'Macrophages\nin tissues',c:'k-iron',i:'Once monocytes enter the tissues, their size increases up to 100-fold and their properties change. These transformed monocytes are called macrophages, and they are very important in the defense against infection. Some are stationary and can survive in the tissues for several years.'},
+ {id:'kup',x:705,y:370,l:'Kupffer cells\nin the liver',c:'k-iron',i:'The liver macrophages (Kupffer cells) are attached to the capillary walls in the liver. They engulf and kill most of the bacteria that have penetrated the mucous membrane barrier of the digestive tract and entered the portal vein.'}];
+const WHO_EDGES=[['root','gran'],['root','nong'],['gran','neu'],['gran','eos'],['gran','bas'],['nong','mono'],['nong','lym'],['mono','mac','become'],['bas','mast','resemble',1],['mac','kup']];
+const WHOQ=[
+ {t:'In the dog and the horse I make up more than half of the leukocytes, and I am the main defender against bacterial infections. Who am I?',a:'neu',not:['gran'],w:'Neutrophils are particularly efficient in combating bacterial infections.'},
+ {t:'I have a kidney-shaped nucleus. I stay in the blood for only a few hours, and I cannot fight infections yet. Who am I?',a:'mono',not:['nong'],w:'Monocytes are immature cells until they enter the tissues.'},
+ {t:'I circulate in the blood, and my vesicles contain histamine and heparin. Who am I?',a:'bas',not:['gran','mast'],w:'Basophils possess vesicles that contain, among other substances, histamine and heparin.'},
+ {t:'I was a monocyte until I entered the tissues and grew up to 100-fold. Who am I?',a:'mac',not:['kup'],w:'The transformed monocytes are called macrophages.'},
+ {t:'I can hardly phagocytize bacteria, but I kill parasites by releasing toxic substances from my vesicles. Who am I?',a:'eos',not:['gran'],w:'Eosinophils migrate to areas invaded by parasites and to sites of allergic reactions.'},
+ {t:'I patrol the tissues, and I can only attack the targets I am programmed for. Who am I?',a:'lym',not:['nong'],w:'This forms the basis of the adaptive (acquired) immune defense.'},
+ {t:'I am a stationary macrophage attached to the capillary walls of the liver. Who am I?',a:'kup',not:['mac'],w:'Kupffer cells engulf and kill most of the bacteria that enter the portal vein from the digestive tract.'},
+ {t:'I live in the tissues, mostly next to capillaries, and basophils resemble me. Who am I?',a:'mast',not:['mac','kup'],w:'Mast cells are present in tissues, primarily adjacent to capillaries.'},
+ {t:'We are the three types with multi-lobed nuclei and many vesicles. What is our group called?',a:'gran',not:['neu','eos','bas'],d:['nong','mast','mac'],w:'They are called polymorphonuclear leukocytes, or granulocytes: neutrophils, eosinophils and basophils.'},
+ {t:'We are the two types whose vesicles do not stain with standard dyes. What is our group called?',a:'nong',not:['mono','lym'],d:['gran','mast','mac'],w:'Monocytes and lymphocytes are the non-granular leukocytes.'}];
+
+/* ---------- 10. Leukocyte numbers map ---------- */
+const NUM_NODES=[
+ {id:'root',x:400,y:215,l:'Leukocyte count\nrange depends on species',c:'k-root',i:'In domestic animal species, the number of white blood cells normally varies between about 4000 and 20 000 per µL of blood (4–20 × 10⁹/L). This is only approximate: the pig’s range is 11–22, the sheep’s 3–11 and the hen’s 20–30 × 10⁹/L, so always use the range for the species. The number of erythrocytes varies only slightly over time in a healthy individual, but both the total number and the relative numbers of the various types of leukocytes vary considerably, even under normal conditions.'},
+ {id:'store',x:150,y:40,l:'Bone marrow store released\nserious infection',c:'k-high',i:'The bone marrow normally stores about ten times more leukocytes than the total number in the blood. When the body is threatened by a serious infection, vast numbers of stored leukocytes are rapidly released from the bone marrow, and the number of leukocytes in the blood rises.'},
+ {id:'cyt',x:150,y:125,l:'Leukocytosis\nabnormally high number',c:'k-high',i:'An increased number of leukocytes in the blood is called leukocytosis. As long as an infection continues, the production rate of leukocytes is kept high, maintaining the elevated number in the blood.'},
+ {id:'pen',x:150,y:305,l:'Leukopenia\nabnormally low number',c:'k-low',i:'Conditions characterized by an abnormally low number of white blood cells are called leukopenia. If the entire production of leukocytes ceases, serious infections will arise, and death will ensue, usually within a few days, if treatment is not initiated.'},
+ {id:'sup',x:150,y:395,l:'Bone marrow activity reduced\nchemotherapy, radiation',c:'k-low',i:'Leukopenia can arise from the use of certain drugs that reduce the activity of the bone marrow, such as chemotherapeutic drugs, from radiation treatment, or, occasionally, from nuclear plant accidents.'},
+ {id:'diff',x:650,y:215,l:'Differential counting\nrelative numbers of each type',c:'k-poly',i:'The various types of leukocytes have different functions, so their relative numbers in the blood vary considerably, depending on which type of assault the body is combating. It is therefore often of diagnostic value to determine the relative numbers of the different types of leukocytes. This is called differential counting.'},
+ {id:'nUp',x:650,y:70,l:'Neutrophils increased\nacute bacterial infection',c:'k-poly',i:'Most of the leukocytes in the large store in the bone marrow are neutrophils, and the number of neutrophils mobilized from this store increases greatly during acute bacterial infections.'},
+ {id:'nDown',x:425,y:385,l:'Neutrophils reduced\nviral infection',c:'k-poly',i:'During viral infections, the number of neutrophils in the blood may be reduced. Differential counting may therefore provide a clue as to whether an infection is bacterial or viral.'},
+ {id:'eUp',x:655,y:365,l:'Eosinophils increased\nallergy or parasite infection',c:'k-poly',i:'The number of eosinophils increases during allergic reactions and in response to parasite infection.'}];
+const NUM_EDGES=[['root','cyt'],['root','pen'],['root','diff'],['store','cyt'],['sup','pen'],['diff','nUp'],['diff','nDown'],['diff','eUp']];
+const NUMQ=[
+ {t:'During a serious infection, the number of leukocytes in a dog’s blood rises well above the normal range. What is this called?',a:'cyt',not:['store','nUp'],w:'An abnormally high number of leukocytes is called leukocytosis.'},
+ {t:'Where do the extra leukocytes come from so rapidly during a serious infection?',a:'store',not:['cyt','nUp'],w:'Vast numbers of stored leukocytes are rapidly released from the bone marrow.'},
+ {t:'A dog has an acute bacterial infection. Which change in the differential count fits?',a:'nUp',not:['cyt','store'],w:'The number of neutrophils mobilized from the bone marrow store increases greatly during acute bacterial infections.'},
+ {t:'A calf is infected with intestinal parasites. Which change in the differential count fits?',a:'eUp',w:'The number of eosinophils increases in response to parasite infection.'},
+ {t:'A sick animal has an infection, and a differential count is made. Which finding suggests that the infection is viral rather than bacterial?',a:'nDown',not:['pen','sup'],w:'During viral infections, the number of neutrophils in the blood may be reduced.'},
+ {t:'A dog has a total leukocyte count far below the normal range. What is this called?',a:'pen',not:['sup','nDown'],w:'An abnormally low number of leukocytes is called leukopenia.'},
+ {t:'That dog is being treated with chemotherapeutic drugs. What is the likely cause of its low count?',a:'sup',not:['pen'],w:'Leukopenia can arise from drugs that reduce the activity of the bone marrow, such as chemotherapeutic drugs, and from radiation treatment.'},
+ {t:'A horse is having an allergic reaction. Which change in the differential count fits?',a:'eUp',w:'The number of eosinophils increases during allergic reactions.'},
+ {t:'Which test determines the relative numbers of the different types of leukocytes?',a:'diff',w:'This is called differential counting. It is often of diagnostic value.'}];
+
+/* ---------- map games ---------- */
+const WHOG={btn:'Who am I? Next clue',hint:'Read the clue aloud, then click the box that answers it.',items:WHOQ,i:-1,cur:null};
+const NUMG={btn:'New case',hint:'Read the case aloud, then click the box that fits.',items:NUMQ,i:-1,cur:null};
+const gameX=G=>MAPX+`<div class="case"><div class="row"><button id="gNew" class="primary">${G.btn}</button><span class="note">${G.hint}</span></div><p class="ct" id="gText"></p><p class="fb" id="gFb" aria-live="polite"></p></div>`;
+function gameInit(G){mapInit();G.cur=null;$('#gNew').onclick=()=>{G.i=(G.i+1)%G.items.length;G.cur=G.items[G.i];$('#gText').textContent=`${G.i+1} of ${G.items.length}: ${G.cur.t}`;$('#gFb').textContent='';$('#gFb').className='fb';document.querySelectorAll('.node.right,.node.wrong').forEach(n=>n.classList.remove('right','wrong'));};}
+function gameNode(G,id,g,root){if(!G.cur)return false;root.querySelectorAll('.node.wrong').forEach(n=>n.classList.remove('wrong'));const fb=$('#gFb');
+  if(id===G.cur.a){g.classList.add('right');fb.className='fb good';fb.textContent='Correct. '+G.cur.w;G.cur=null;}
+  else{g.classList.add('wrong');fb.className='fb bad';fb.textContent='Not this one. Try again.';}
+  return true;}
+const mapMod=(o,nodes,edges,G,cap)=>({...o,g:'Concept maps',nodes,game:G,svg:()=>mapSVG(nodes,edges),extra:gameX(G),init(){gameInit(G);},onNode(id,g,root){return gameNode(G,id,g,root);},after(root){mapClicks(this,root);},scen:{explore:{label:'Explore',steps:[{cap}]}}});
+
+/* ---------- module list ---------- */
+const MODS=[
+{id:'meet',g:'Animations',title:'What makes a leukocyte different',scen:{
+ vs:{label:'White cells and red cells',svg:M1A,steps:[
+  {on:['lr'],cap:'Erythrocytes perform their functions inside the blood vessels.'},
+  {on:['w1','lw'],cap:'Leukocytes have no pigmented molecules such as hemoglobin. That is why they are called white blood cells (leukos = white).',q:'Why are leukocytes called white blood cells?',o:['They lack pigments such as hemoglobin','They store a pale pigment in their vesicles','They are made in the yellow bone marrow','They have no nucleus or organelles'],a:'Leukos means white. Leukocytes have no hemoglobin or other pigment.'},
+  {on:['ratio'],cap:'In the blood, the number of white blood cells is only a fraction, 1/500 to 1/1000, of the number of red blood cells.',q:'How does the number of white blood cells in the blood compare with the number of red blood cells?',o:['About 1/500 to 1/1000 of the red cell number','About one tenth to one fifth of the red cell number','About the same as the red cell number','About ten times the red cell number'],a:'More than 90% of the blood cells are erythrocytes.'},
+  {on:['mar','site'],cap:'Leukocytes use the blood only as a means of transport, from the sites where they are formed to the sites where they are needed.',q:'What do leukocytes use the blood for?',o:['Only as transport to where they are needed','As the place where they do all their work','As a store where they live for several years','As a supply of hemoglobin and oxygen'],a:'Erythrocytes perform their functions inside the blood vessels. Leukocytes do not.'},
+  {on:['bugs'],cap:'They are needed at sites where bacteria, viruses, fungi or parasites have entered the body.'},
+  {off:['w1','lw'],on:['wm','chem'],cap:'Large numbers of leukocytes are rapidly directed to sites of inflammation, where they can effectively combat the offending organisms. They squeeze through the spaces between the endothelial cells of the vessel wall (diapedesis) and move toward the source of a chemotactic substance (chemotaxis).',dur:5200},
+  {off:['wm'],on:['wend','w2','w3'],cap:'The various types of leukocytes have different functions in the defense of the body. However, all types are essential.',q:'Which types of leukocytes are essential for the defense of the body?',o:['All five types','Only the neutrophils','Only the lymphocytes','Only the granulocytes'],a:'The various types have different functions in the defense of the body, and all of them are essential.'}]},
+ store:{label:'The bone marrow reserve',svg:M1B,steps:[
+  {on:['mg','bg'],cap:'In the blood, leukocytes are only 1/500 to 1/1000 as numerous as erythrocytes. In the bone marrow, on the other hand, about 75% of the cells are white blood cells or their precursors. Several factors explain this.',q:'What share of the cells in the bone marrow are white blood cells or their precursors?',o:['About 75%','About 1%','About 10%','About 25%'],a:'In the blood, by contrast, leukocytes are only 1/500 to 1/1000 of the number of red blood cells.'},
+  {cap:'First factor: the lifespan of the leukocytes is much shorter than the lifespan of the erythrocytes.'},
+  {on:['bars'],w:{bBl:.09,bSt:.9},cap:'Second factor: the bone marrow normally stores about ten times more leukocytes than the total number in the blood. Mature erythrocytes, in contrast, are transferred to the blood as soon as they are formed.',q:'How large is the store of leukocytes in the bone marrow?',o:['About ten times the total number of leukocytes in the blood','About the same as the number in the blood','About one tenth of the number in the blood','There is no store: leukocytes enter the blood as soon as they are formed'],a:'Mature erythrocytes, in contrast, are transferred to the blood as soon as they are formed.'},
+  {cap:'Third factor: mature erythrocytes are present only in the blood, whereas mature leukocytes are present nearly everywhere in the body.'},
+  {on:['inf','flowA'],w:{bBl:.32,bSt:.55},cap:'When the body is threatened by a serious infection, vast numbers of stored leukocytes are rapidly released from the bone marrow, and the number of leukocytes in the blood rises.',q:'What happens to the stored leukocytes when the body is threatened by a serious infection?',o:['Vast numbers are rapidly released from the bone marrow','They are destroyed in the spleen','They turn into erythrocytes','They stay in the bone marrow until the infection is over'],a:'The number of leukocytes in the blood rises.'},
+  {cap:'As long as the infection continues, the production rate of leukocytes is kept high, which maintains the elevated number in the blood. An increased number of leukocytes in the blood is called leukocytosis.',q:'What is an increased number of leukocytes in the blood called?',o:['Leukocytosis','Leukopenia','Polycythemia','Anemia'],a:'An abnormally low number is called leukopenia.'},
+  {off:['inf','flowA'],on:['pen'],w:{bBl:.02,bSt:.05},cap:'An abnormally low number of white blood cells is called leukopenia. It can arise from drugs that reduce the activity of the bone marrow, such as chemotherapeutic drugs, from radiation treatment, or, occasionally, from nuclear plant accidents.',q:'What can cause leukopenia?',o:['Drugs or radiation that reduce bone marrow activity','A serious infection that empties the bone marrow store','Hard physical exercise that mobilizes the spleen','A fatty meal that activates lipoprotein lipase'],a:'Leukopenia is an abnormally low number of white blood cells.'},
+  {cap:'If the entire production of leukocytes ceases, serious infections will arise, and death will ensue, usually within a few days, if treatment is not initiated.',q:'What happens if the entire production of leukocytes ceases?',o:['Serious infections, and usually death within days','Nothing, as the marrow store lasts for several years','Erythrocytes take over the defense of the body','The animal becomes jaundiced within a few hours'],a:'All types of leukocytes are essential for the defense of the body.'}]}}},
+
+{id:'types',g:'Animations',title:'The five types of leukocytes',svg:M2,scen:{main:{label:'The five types',steps:[
+  {on:['ghost'],cap:'Leukocytes are larger than erythrocytes, and they have a nucleus and the usual cell organelles. Because they do not contain pigments, they must be stained with dyes before the various types can be distinguished from each other under the microscope.',q:'Why must leukocytes be stained before the types can be distinguished under the microscope?',o:['They do not contain pigments','They are too small to be seen','They have no nucleus','They are hidden inside the erythrocytes'],a:'Erythrocytes contain hemoglobin; leukocytes contain no pigments.'},
+  {off:['ghost'],on:['c0','c1','c2','c3','c4'],cap:'After staining, five different types of leukocytes can be told apart. Leukocytes are classified by the shape of the nucleus, the numbers and types of vesicles, and the site of production.',q:'On what basis are leukocytes classified?',o:['Nucleus shape, vesicles, and site of production','Colour before staining, and hemoglobin content','Cell size, lifespan, and oxygen-carrying capacity','Number of nuclei, and speed in the blood'],a:'There are five different types of leukocytes.'},
+  {on:['br1'],hot:['h0','h1','h2'],cap:'Three types have multi-lobed nuclei with varying shapes, so they are called polymorphonuclear leukocytes (polymorph = many shapes). They have many vesicles, which give the cytoplasm a granular appearance when the cells are stained, so they are also often called granulocytes.',q:'Why are polymorphonuclear leukocytes also called granulocytes?',o:['Their vesicles make stained cytoplasm look granular','Their nuclei break up into small granules with age','They are formed from granules in the plasma','They carry granules of hemoglobin to the tissues'],a:'Polymorph means many shapes: their nuclei are multi-lobed with varying shapes.'},
+  {on:['lab0'],hot:['h0'],cap:'Neutrophilic granulocyte (neutrophil). Mature neutrophils have an irregular, multi-lobed nucleus. In the dog (70%) and the horse (60%), neutrophils are more than half of the leukocytes. In the cow, pig and sheep, lymphocytes are the largest group.',q:'Which leukocyte makes up more than half of the leukocytes in the dog and the horse?',o:['Neutrophil','Lymphocyte','Eosinophil','Monocyte'],a:'In the cow, pig and sheep, lymphocytes are the largest group instead.'},
+  {on:['lab1'],hot:['h1'],cap:'Eosinophilic granulocyte (eosinophil). In the stained cells drawn here, its vesicles appear orange-red.'},
+  {on:['lab2'],hot:['h2'],cap:'Basophilic granulocyte (basophil). In the stained cells drawn here, its vesicles appear dark blue. The different granulocytes are easily identified by microscopy by the colour of their vesicles after staining.',q:'How are the three types of granulocytes identified under the microscope?',o:['By the colour of their vesicles after staining','By their size alone, measured under the microscope','By the number of separate nuclei in each cell','By the amount of hemoglobin in the cytoplasm'],a:'The three types are neutrophilic, eosinophilic and basophilic granulocytes.'},
+  {on:['br2'],hot:['h3','h4'],cap:'The vesicles of the other two leukocyte types do not stain when treated with standard dyes. These cells are often called non-granular leukocytes.',q:'Which two types are the non-granular leukocytes?',o:['Monocytes and lymphocytes','Neutrophils and eosinophils','Basophils and monocytes','Eosinophils and lymphocytes'],a:'Their vesicles do not stain when treated with standard dyes.'},
+  {on:['lab3'],hot:['h3'],cap:'Monocyte. Monocytes have a kidney-shaped nucleus and are larger than lymphocytes.',q:'Which leukocyte has a kidney-shaped nucleus?',o:['Monocyte','Lymphocyte','Neutrophil','Basophil'],a:'Monocytes are also larger than lymphocytes.'},
+  {on:['lab4'],hot:['h4'],cap:'Lymphocyte: the other non-granular leukocyte.'},
+  {on:['ves'],cap:'Certain leukocyte types have particularly many membrane vesicles in the cytoplasm. These vesicles are either lysosomes, or vesicles that transfer their contents to the adjacent tissue fluid by exocytosis.'},
+  {on:['fnN'],cap:'Neutrophils, and monocytes once they have become macrophages in the tissues, protect the body by engulfing invading organisms, breaking them down, and digesting their cellular material. This is called phagocytosis.',q:'What is phagocytosis?',o:['Engulfing, breaking down and digesting invaders','Producing antibodies against specific invaders','Releasing toxic substances onto parasites','Releasing histamine and heparin into tissues'],a:'Neutrophils and macrophages work in this way. Eosinophils have negligible ability to phagocytize bacteria.'},
+  {on:['fnE'],cap:'The other two granulocytes work differently. Eosinophils have negligible ability to phagocytize bacteria; they kill parasites by releasing toxic substances from their vesicles. Basophils have vesicles that contain histamine and heparin; histamine released from basophils and mast cells is largely responsible for most allergic reactions.'},
+  {on:['fnL'],cap:'Lymphocytes, on the other hand, seek out and combat microorganisms in a more elaborate manner, partly by producing antibodies against the intruders.',q:'Which leukocytes combat microorganisms partly by producing antibodies?',o:['Lymphocytes','Neutrophils','Eosinophils','Monocytes'],a:'Neutrophils and macrophages use phagocytosis instead.'}]}}},
+
+{id:'tree',g:'Animations',title:'Production of leukocytes',scen:{
+ tree:{label:'The family tree',svg:M3A,steps:[
+  {on:['stem'],cap:'All blood cells originate from a single, undifferentiated, pluripotent stem cell type in the bone marrow (pluripotent = having many potentials).',q:'From which cell do all blood cells originate?',o:['A single pluripotent stem cell type','Mature lymphocytes in the lymph nodes','Megakaryocytes in the bone marrow','Macrophages attached to liver capillaries'],a:'Pluripotent means having many potentials.'},
+  {on:['lymS','myeS'],cap:'The undifferentiated stem cells give rise to two slightly more differentiated cell types: lymphoid stem cells and myeloid stem cells.'},
+  {on:['T','B'],cap:'Lymphoid stem cells produce lymphocytes.',q:'Which cells do lymphoid stem cells produce?',o:['Lymphocytes','Neutrophils','Erythrocytes','Blood platelets'],a:'All the other blood cells come from myeloid stem cells.'},
+  {on:['mo','ne','eo','ba'],cap:'Myeloid stem cells give rise to the other types of leukocytes: the monocytes and the three types of granulocytes.'},
+  {on:['rb','mk','pl'],cap:'Myeloid stem cells also give rise to the erythrocytes and the blood platelets. Blood platelets (thrombocytes) are cellular fragments of megakaryocytes, a cell type that is found only in the bone marrow.',q:'Which cells do myeloid stem cells give rise to?',o:['Other leukocytes, erythrocytes and platelets','Lymphocytes only, in the lymphoid tissue','Erythrocytes only, in the red bone marrow','Antibodies, cytokines and erythropoietin'],a:'Lymphoid stem cells produce the lymphocytes.'},
+  {hot:['hmo','hne','heo','hba'],cap:'Granulocytes and monocytes are formed only in the bone marrow.',q:'Where are granulocytes and monocytes formed?',o:['Only in the bone marrow','In the lymph nodes','In the spleen and the thymus','In the liver'],a:'Mature lymphocytes, in contrast, arise in lymphoid tissue.'},
+  {on:['lt'],hot:['hT','hB'],cap:'Most immature lymphocytes, on the other hand, leave the bone marrow at the end of the fetal stage and during the early postnatal period. They migrate to lymphoid tissue in the lymph nodes, spleen, tonsils, thymus, intestines and other organs, where they give rise to mature lymphocytes through further mitosis and differentiation. From there, lymphocytes enter the blood.',q:'Where do mature lymphocytes arise?',o:['In lymphoid tissue, such as the lymph nodes','Only in the red bone marrow of flat bones','In the circulating blood, during a few hours','In the kidneys, under the control of cytokines'],a:'Most immature lymphocytes leave the bone marrow at the end of the fetal stage and during the early postnatal period.'}]},
+ cyto:{label:'Cytokines and infection',svg:M3B,steps:[
+  {...BASE3,cap:'The production of immature leukocytes from stem cells, and their differentiation to mature cells, are complex processes regulated by the interaction of many cytokines. Cytokines are proteins or peptides that are produced by certain cells and affect the growth or activity of other cells.',q:'What are cytokines?',o:['Proteins or peptides that affect other cells','Vesicles that empty their contents by exocytosis','A type of lymphocyte found in lymphoid tissue','Fragments that bud off from megakaryocytes'],a:'The interaction of many cytokines regulates the production and differentiation of leukocytes.'},
+  {w:{bInf:.9},set:{vInf:'present',status:'Infection starts'},hot:['nTop'],cap:'The process usually starts with an infection.'},
+  {on:['cyt'],w:{bCyt:.9},set:{vCyt:'increased',status:'Cytokines produced'},hot:['nRight'],cap:'Cytokines produced by activated leukocytes, or by other cells in infected or injured tissue, regulate the production of immature leukocytes from stem cells.',q:'Which cells produce the cytokines that regulate the production of immature leukocytes?',o:['Activated leukocytes and cells in infected tissue','Erythrocytes passing through infected tissue','Blood platelets released from the spleen','Kidney cells responding to low oxygen delivery'],a:'These cytokines regulate the production of immature leukocytes from stem cells.'},
+  {hot:['nBot'],set:{status:'Stem cells respond'},cap:'Other cytokines guide the differentiation of the new cells in the appropriate direction.'},
+  {w:{bLeu:.92},set:{vLeu:'increased',status:'More defense cells'},hot:['nLeft'],cap:'The process continues with increased mobilization and production of defense cells. Leukocytes are produced at varying rates, depending on the defense needs of the body.'},
+  {cap:'The number of granulocytes in the blood is regulated in two different ways: regulated transfer of mature granulocytes from the store in the bone marrow into the blood, and regulated production of new granulocytes.',q:'In which two ways is the number of granulocytes in the blood regulated?',o:['Release from the marrow store, and new production','Release from the spleen, and release from the liver','Changes in plasma volume and in blood viscosity','Division of mature granulocytes in blood and tissue'],a:'Both are regulated in accordance with the body’s needs.'},
+  {off:['cyt'],w:{bInf:.04,bCyt:.15,bLeu:.45},set:{vInf:'removed',vCyt:'low',vLeu:'normal',status:'Cause removed'},cap:'The process is terminated by removal of the cause of the infection. The various cytokines also participate in elaborate feedback mechanisms.',q:'What terminates the process?',o:['Removal of the cause of the infection','Exhaustion of the bone marrow','A fall in the number of erythrocytes','The first cytokine that is released'],a:'It starts with an infection, continues with increased mobilization and production of defense cells, and ends when the cause is removed.'}]}}},
+
+{id:'dia',g:'Animations',title:'Diapedesis and chemotaxis',svg:M_DIA,scen:{main:{label:'Leaving the blood',steps:[
+  {on:['wN','flow'],cap:'Leukocytes use the blood only as a means of transport. To defend against an infection, they must leave the blood vessel and enter the tissue spaces. Neutrophils and macrophages defend against infections in the tissues.'},
+  {on:['chem','src'],cap:'At the site of infection, a chemotactic substance spreads out from the chemotaxis source into the surrounding tissue. Its concentration is highest at the source and falls with distance from it.',q:'Where is the concentration of the chemotactic substance highest?',o:['At the chemotaxis source','Inside the blood vessel','Evenly through the tissue','Next to the bone marrow'],a:'It falls with distance from the source.'},
+  {off:['flow'],on:['marg'],cap:'Near the site, leukocytes line up along the inner wall of the vessel and stick to it. This is called margination.',q:'What is margination?',o:['Leukocytes lining up along the vessel wall','Leukocytes squeezing through the vessel wall','Leukocytes moving toward the chemotaxis source','Antibodies helping to select bacteria'],a:'It happens near the site of infection, before the cells leave the vessel.',dur:2600},
+  {off:['wN'],on:['wW','perm'],cap:'At the site, the vessel wall becomes more permeable: the spaces between the endothelial cells widen. This is called increased permeability.',q:'Which change in the vessel wall is called increased permeability?',o:['The spaces between endothelial cells widen','The endothelial cells divide rapidly','The vessel wall becomes much thicker','The endothelial cells fill with hemoglobin'],a:'The wider spaces let leukocytes pass through the wall.'},
+  {off:['marg'],on:['dia','diaL','zoom'],cap:'Each leukocyte squeezes through a space between two endothelial cells and enters the tissue spaces. This is called diapedesis.',q:'What is diapedesis?',o:['Leukocytes squeezing through the vessel wall','Leukocytes lining up along the vessel wall','Leukocytes moving toward the chemotaxis source','Antibodies helping to select bacteria'],a:'The leukocytes pass through the spaces between the endothelial cells.',dur:4400},
+  {off:['dia'],on:['chx','arw'],cap:'The chemotactic substance attracts the leukocytes; this attraction is called chemotaxis. Once in the tissue, they migrate toward the chemotaxis source, where the concentration of the chemotactic substance is highest.',q:'What guides leukocytes to the infection once they are in the tissue?',o:['The chemotactic substance','The flow of blood in the vessel','Heparin released by basophils','Erythropoietin from the kidneys'],a:'They move toward the source, where the concentration is highest.',dur:3000},
+  {on:['pha'],cap:'Neutrophils, and monocytes once they have become macrophages in the tissues, engulf the invaders, break them down and digest them: phagocytosis.',q:'Which cells defend against infections by phagocytosis?',o:['Neutrophils and macrophages','Eosinophils and basophils','Lymphocytes and erythrocytes','Basophils and mast cells'],a:'Eosinophils have negligible ability to phagocytize bacteria.'},
+  {off:['zoom'],on:['ops'],cap:'Lymphocytes combat microorganisms partly by producing antibodies against them. The selection and phagocytosis process with the help of antibodies is called opsonization.',q:'What is opsonization?',o:['Selection and phagocytosis helped by antibodies','Leukocytes lining up along the vessel wall','Leukocytes squeezing through the vessel wall','Movement toward a chemotactic substance'],a:'The antibodies are produced by lymphocytes.'}]}}},
+
+{id:'infl',g:'Animations',title:'Inflammation',scen:{
+ steps:{label:'Steps of inflammation',svg:M_INF1,steps:[
+  {on:['vN','wN','flow','bac'],cap:'A break in the skin introduces bacteria, which reproduce at the wound site.',q:'In this example, what starts the inflammation?',o:['Bacteria entering through a break in the skin','Mast cells dividing in the capillary wall','Erythrocytes leaking out of the capillary','Monocytes leaving the bone marrow store'],a:'Inflammation can be started by bacterial invasion or tissue damage.'},
+  {on:['mac1','eat1','cyt','chem'],cap:'Activated resident macrophages engulf the pathogens and secrete cytokines and chemotaxins (chemotactic substances). Resident macrophages are macrophages already living in the tissue, like the stationary macrophages described in Module 7.',q:'What do activated resident macrophages secrete at a wound?',o:['Cytokines and chemotaxins','Histamine and heparin','Antibodies and hemoglobin','Erythropoietin and iron'],a:'Chemotaxins are chemotactic substances: they attract phagocytes to the site.'},
+  {on:['mast','hist'],cap:'Activated mast cells release histamine. Histamine and the other substances released from mast cells and basophils are also largely responsible for most allergic reactions.',q:'Which cells release histamine at the wound?',o:['Mast cells','Neutrophils','Monocytes','Erythrocytes'],a:'Basophils in the blood resemble the mast cells in the tissues.'},
+  {off:['vN','wN','flow'],on:['vD','wW','stick'],cap:'Histamine and cytokines dilate the local blood vessels (the arterioles), so more blood arrives, and widen the capillary pores, the spaces between the endothelial cells. Cytokines also make the vessel wall sticky, so neutrophils and monocytes attach to it.',q:'What makes neutrophils and monocytes attach to the vessel wall?',o:['Cytokines make the wall sticky','Histamine dissolves the wall','Bacteria pull them out of the blood','Erythrocytes push them to the side'],a:'This attachment to the wall is the margination shown in the diapedesis module.',dur:2600},
+  {off:['stick'],on:['thru'],cap:'Chemotaxins attract neutrophils and monocytes, which squeeze out between the cells of the blood vessel wall. This process is called diapedesis.',dur:4200},
+  {off:['thru'],on:['go','monoGo'],cap:'Guided by the chemotaxins, the neutrophils and monocytes migrate to the infection site.',dur:2600},
+  {off:['monoGo'],on:['mac2','kill'],cap:'Monocytes enlarge into macrophages. Newly arriving macrophages and neutrophils engulf the pathogens and destroy them.',q:'Which cells engulf and destroy the pathogens at the wound?',o:['Macrophages and neutrophils','Mast cells and basophils','Erythrocytes and platelets','Lymphocytes and eosinophils'],a:'Monocytes become macrophages once they enter the tissues.',dur:3200},
+  {on:['sys'],cap:'Macrophages also secrete cytokines that exert multiple local and systemic effects. For example, cytokines produced by activated leukocytes regulate the production of new leukocytes from stem cells in the bone marrow.',q:'Where can cytokines from the inflamed site act?',o:['Both locally and in the rest of the body','Only inside the macrophage that made them','Only on the bacteria at the wound','Only inside the capillary lumen'],a:'One systemic effect is increased production of leukocytes in the bone marrow.'}]},
+ signs:{label:'Signs and outcomes',svg:M_INF2,steps:[
+  {on:['f0'],cap:'Bacterial invasion or tissue damage triggers inflammation: mast cells release histamine.',q:'What do mast cells release when tissue is invaded or damaged?',o:['Histamine','Hemoglobin','Erythropoietin','Bilirubin'],a:'Histamine has two local effects on the blood vessels.'},
+  {on:['fL'],cap:'Histamine causes local arteriolar vasodilation, which increases blood delivery to the injured tissue. This produces redness and heat.',q:'Which two signs of inflammation come from increased blood delivery?',o:['Redness and heat','Swelling and pain','Pain and fever','Heat and swelling'],a:'More blood flows through the injured tissue.'},
+  {on:['fR'],cap:'Histamine also increases local capillary permeability, so fluid accumulates in the tissue. This produces swelling and pain.',q:'What causes the swelling at an inflamed site?',o:['Local accumulation of fluid','Increased blood delivery','Division of mast cells','Phagocytic secretions'],a:'The leakier capillaries let fluid accumulate in the tissue.'},
+  {on:['fP'],cap:'Increased blood delivery and leakier capillaries together raise the amount of crucial plasma proteins in the tissue, such as the clotting (coagulation) factors.',q:'Which plasma proteins does the inflamed tissue gain, for example?',o:['Clotting factors','Hemoglobin','Ferritin','Erythropoietin'],a:'One clotting factor is fibrinogen, which is converted to insoluble fibrin during coagulation.'},
+  {on:['fH'],cap:'They also raise the number of phagocytes in the tissue: more leukocytes are delivered, and they leave the leaky capillaries by diapedesis.',q:'How do more phagocytes reach the inflamed tissue?',o:['More blood brings them, and they leave by diapedesis','They are formed inside the inflamed tissue','Mast cells divide and become phagocytes','Erythrocytes turn into phagocytes'],a:'Neutrophils and monocytes leave through the widened capillary pores.'},
+  {on:['fO'],cap:'Phagocytes produce secretions. Together with the plasma proteins, the phagocytes and their secretions defend against the foreign invader and support tissue repair. Phagocytic secretions also cause systemic responses, such as fever.',q:'Which systemic response can phagocytic secretions cause?',o:['Fever','Redness','Local swelling','Wider capillary pores'],a:'Redness, local swelling and wider pores are local effects.'},
+  {on:['fB'],cap:'A blood sample can also reflect inflammation. A serious infection releases stored leukocytes from the bone marrow, so their number in the blood rises (leukocytosis), and the erythrocyte sedimentation rate is increased in inflammation. As with fever and increased numbers of leukocytes, an increased sedimentation rate is a non-specific indicator of disease. Measuring it is clinically useful in dogs and pigs, but not in horses or ruminants.',q:'Why is an increased sedimentation rate called a non-specific indicator?',o:['It shows disease but not which disease','It is found only in healthy animals','It identifies the exact bacterium','It rises only in tumour formation'],a:'Fever and increased numbers of leukocytes are also non-specific indicators of disease.'}]}}},
+
+{id:'gran',g:'Animations',title:'Granulocytes at work',scen:{
+ neu:{label:'Neutrophil and bacteria',svg:M4A,steps:[
+  {on:['store'],cap:'Most of the leukocytes in the large store in the bone marrow are neutrophils. In the dog and the horse, neutrophils are also more than half of the leukocytes in the blood.',q:'Which cells make up most of the leukocyte store in the bone marrow?',o:['Neutrophils','Lymphocytes','Eosinophils','Monocytes'],a:'This store is released rapidly during acute bacterial infections.'},
+  {on:['nV','tB'],cap:'Granulocytes have a short lifespan. Once released from the bone marrow, they circulate in the blood for 4–8 hours.',q:'How long do granulocytes remain in the blood?',o:['4–8 hours','3–4 days','About 10 days','90–140 days'],a:'They then leave the bloodstream for the peripheral tissues.'},
+  {on:['bac1','bac2'],cap:'A bacterial infection arises. Neutrophils are particularly efficient in combating bacterial infections.',q:'Against which kind of infection are neutrophils particularly efficient?',o:['Bacterial infections','Parasite infections','Viral infections','Fungal infections only'],a:'Neutrophils have a main role in the defense against bacterial infections.'},
+  {off:['nV'],on:['nm','chem'],cap:'Large numbers of neutrophils migrate to the infected area and attack the invasive bacteria. Each one squeezes through a space between the endothelial cells (diapedesis) and moves toward the chemotactic substance spreading from the infection (chemotaxis).',dur:5400},
+  {off:['nm','bac2'],on:['nAt','n2','eat'],cap:'Neutrophils engulf the invading bacteria, break them down, and digest their cellular material: phagocytosis.'},
+  {off:['n2'],on:['dead'],cap:'During this process, the neutrophils are also rapidly destroyed. The neutrophilic granulocytes can be considered the body’s “stormtroopers” in the defense against bacteria.',q:'What happens to the neutrophils while they attack the bacteria?',o:['They are rapidly destroyed','They divide to form more neutrophils','They turn into macrophages','They return to the bone marrow'],a:'That is why an extensive supply of new neutrophils is necessary.'},
+  {on:['more'],cap:'To sustain a high number in the blood, an extensive supply of new neutrophils is necessary. The number of neutrophils mobilized from the bone marrow store increases greatly during acute bacterial infections.',q:'What happens to the number of neutrophils mobilized from the bone marrow store during acute bacterial infections?',o:['It increases greatly','It falls to zero','It does not change','It decreases slightly'],a:'Most of the leukocytes in the bone marrow store are neutrophils.'},
+  {on:['tT'],cap:'After leaving the bloodstream, granulocytes live for another 3–4 days in the peripheral tissues. If the body is subject to a serious infection, the lifespan is even shorter.',q:'How long do granulocytes live after they leave the bloodstream?',o:['Another 3–4 days','Another 4–8 hours','Several years','About 120 days'],a:'In a serious infection, the lifespan is even shorter.'},
+  {on:['age'],cap:'All granulocytes have vesicles (granules) that contain biologically active substances, which participate in inflammatory and allergic reactions. The nuclei of the granulocytes become more multi-lobed as they grow older.',q:'How do the nuclei of granulocytes change as the cells grow older?',o:['They become more multi-lobed','They become round','They disappear','They become kidney-shaped'],a:'Mature neutrophils have an irregular, multi-lobed nucleus.'},
+  {off:['more','bac1','nAt','eat','dead','chem'],on:['vir'],cap:'During viral infections, on the other hand, the number of neutrophils in the blood may be reduced. Differential counting may therefore provide a clue as to whether an infection is bacterial or viral.',q:'What may happen to the number of neutrophils in the blood during viral infections?',o:['It may be reduced','It always increases greatly','It never changes','It doubles within hours'],a:'Differential counting may therefore provide a clue as to whether an infection is bacterial or viral.'}]},
+ eos:{label:'Eosinophil and parasite',svg:M4B,steps:[
+  {on:['eV','bx'],cap:'Eosinophils have negligible ability to ingest and digest (phagocytize) bacteria, and are therefore unimportant in the defense against common infections.',q:'How important are eosinophils in the defense against common bacterial infections?',o:['Unimportant: they hardly phagocytize bacteria','They are the main defenders against bacteria','They produce antibodies against bacteria','They kill bacteria by releasing heparin'],a:'Their targets are parasites, and they also migrate to sites of allergic reactions.'},
+  {off:['bx'],on:['par','muc'],cap:'However, eosinophils migrate to areas invaded by parasites, and also to sites of allergic reactions. They are particularly abundant in the mucosa of the gastro-intestinal tract, where they defend against parasites.'},
+  {off:['eV'],on:['em'],cap:'An eosinophil leaves the blood through a space between the endothelial cells (diapedesis) and migrates to the area invaded by the parasite.',dur:5400},
+  {off:['em'],on:['eAt','tox'],cap:'Eosinophils kill parasites by releasing toxic substances that are stored in their vesicles.',q:'How do eosinophils kill parasites?',o:['By releasing toxic substances from vesicles','By engulfing them whole and digesting them','By producing antibodies against the parasite','By releasing heparin onto the parasite'],a:'Eosinophils have negligible ability to phagocytize.'},
+  {on:['tr'],cap:'Eosinophils are also abundant in the respiratory and urinary tracts.',q:'Where are eosinophils particularly abundant?',o:['In the mucosa of the gut, airways and urinary tract','In the bone marrow store, waiting for release','On the capillary walls of the liver and lungs','In the lymph nodes, spleen and thymus'],a:'In the gastro-intestinal mucosa they defend against parasites.'},
+  {on:['eMore'],cap:'The number of eosinophils increases during allergic reactions and in response to parasite infection.',q:'Which situations are associated with elevated numbers of eosinophils in the blood?',o:['Allergic reactions and parasite infections','Acute bacterial infections and inflammation','Viral infections and radiation treatment','Hemorrhage and hard physical exercise'],a:'Eosinophils migrate to areas invaded by parasites and to sites of allergic reactions.'}]},
+ bas:{label:'Basophil and mast cell',svg:M4C,steps:[
+  {on:['bV','vs'],cap:'Basophils possess vesicles that contain, among other substances, histamine and heparin.',q:'Which substances do the vesicles of basophils contain?',o:['Histamine and heparin','Hemoglobin and ferritin','Antibodies and cytokines','Erythropoietin and thrombopoietin'],a:'These substances are released from the vesicles.'},
+  {on:['mast'],cap:'Basophils resemble mast cells, which are present in tissues, primarily adjacent to capillaries.',q:'Which cell type in the blood resembles the mast cells in tissues?',o:['Basophils','Neutrophils','Monocytes','Lymphocytes'],a:'Mast cells are present in tissues, primarily adjacent to capillaries.'},
+  {on:['hist'],cap:'Histamine and the other substances released from basophils and mast cells are largely responsible for most allergic reactions.',q:'Which cells release the substances that are largely responsible for most allergic reactions?',o:['Basophils and mast cells','Neutrophils and monocytes','Erythrocytes','Lymphocytes and macrophages'],a:'Histamine is one of these substances.'},
+  {off:['hist'],on:['hep'],cap:'Heparin is a sulfated polysaccharide. It functions as a cofactor for the enzyme lipoprotein lipase, and so contributes to the removal of lipids from the blood after a meal with a high fat content.',q:'How does heparin contribute to the removal of lipids from the blood after a fatty meal?',o:['It functions as a cofactor for the enzyme lipoprotein lipase','It binds the lipids and carries them to the kidneys','It dissolves the lipids directly','It stops the absorption of fat from the intestine'],a:'Heparin is a sulfated polysaccharide.'},
+  {on:['coag'],cap:'High concentrations of heparin inhibit coagulation of the blood. However, the concentration of heparin in plasma is probably normally too low to have a physiologically significant effect on coagulation.',q:'What is the effect of high concentrations of heparin on the coagulation of blood?',o:['They inhibit coagulation','They speed up coagulation','They have no effect on coagulation','They destroy the blood platelets'],a:'The concentration of heparin in plasma is probably normally too low to have a physiologically significant effect.'}]}}},
+
+{id:'mono',g:'Animations',title:'Monocyte to macrophage',scen:{
+ change:{label:'A monocyte becomes a macrophage',svg:M5A,steps:[
+  {on:['mV','tB'],cap:'Monocytes, like granulocytes, remain in the bloodstream for only a few hours before they migrate into the tissues.',q:'How long do monocytes remain in the bloodstream?',o:['Only a few hours','About 10 days','Several years','About 120 days'],a:'They then migrate into the tissues.'},
+  {on:['cmp'],cap:'Neutrophils are mature cells that can destroy bacteria once they are released from the bone marrow. Monocytes, in contrast, are immature cells that have no ability to fight infections.',q:'How do monocytes in the blood differ from neutrophils?',o:['Monocytes are immature and cannot yet fight infections','Monocytes are mature; neutrophils are immature cells','Monocytes carry oxygen; neutrophils carry carbon dioxide','Monocytes live for years in the blood; neutrophils for hours'],a:'Monocytes change once they enter the tissues.'},
+  {off:['mV','cmp','tB'],on:['mm','chem'],cap:'The monocyte leaves the bloodstream through a space between the endothelial cells (diapedesis) and migrates into the tissues toward the infection (chemotaxis).',dur:5400},
+  {off:['mm'],on:['mac','x100'],cap:'Once these cells enter the tissues, their size increases up to 100-fold, and their properties also change. The transformed monocytes are called macrophages.',q:'What is a macrophage?',o:['A monocyte transformed in the tissues','An old neutrophil with more nuclear lobes','A lymphocyte that has settled in a lymph node','A large fragment of a megakaryocyte'],a:'Their size increases up to 100-fold, and their properties also change.',dur:5000},
+  {on:['bac'],cap:'Macrophages are very important in the defense against infection.'},
+  {off:['bac'],on:['eat'],cap:'Macrophages engulf bacteria and other invading organisms, break them down, and digest their cellular material: phagocytosis.'},
+  {on:['yrs'],cap:'Some macrophages are not particularly mobile and can survive in the tissues for several years. These are the stationary macrophages.',q:'What is a stationary macrophage?',o:['A non-mobile macrophage living years in tissue','A monocyte that never leaves the bone marrow','A macrophage that circulates in the blood','A macrophage that lives for only 4–8 hours'],a:'Examples are the macrophages of the liver and of the pulmonary alveoli.'}]},
+ gates:{label:'Guards at two gateways',svg:M5B,steps:[
+  {on:['kl'],cap:'Some stationary macrophages are attached to the capillary walls in the liver. These liver macrophages are called Kupffer cells.',q:'What is a Kupffer cell?',o:['A stationary macrophage in the liver','A lymphocyte that stays in a lymph node','A neutrophil in the bone marrow store','A mast cell next to a lung capillary'],a:'Kupffer cells are the liver macrophages.'},
+  {on:['b1'],cap:'Some bacteria penetrate the mucous membrane barrier of the digestive tract and enter the portal vein.'},
+  {off:['b1'],on:['b2'],cap:'The portal vein carries them to the liver. The Kupffer cells are important in the defense against these bacteria.'},
+  {off:['b2'],on:['b3'],cap:'The liver macrophages engulf and kill most of these bacteria.'},
+  {on:['b4'],cap:'Only very few bacteria manage to enter the systemic circulatory system.',q:'What happens to most of the bacteria that enter the portal vein from the digestive tract?',o:['The Kupffer cells engulf and kill them','They pass freely into the systemic circulatory system','They are excreted in the bile','They are carried to the lungs'],a:'Only very few manage to enter the systemic circulatory system.'},
+  {on:['a1','al'],cap:'Another common entryway for microorganisms is the airways. Stationary macrophages are also attached to, and within, the walls of the pulmonary alveoli.'},
+  {off:['a1'],on:['a2'],cap:'These alveolar macrophages are also crucial in the body’s defenses.',q:'Besides the liver, where are stationary macrophages found?',o:['In the walls of the pulmonary alveoli','Inside the erythrocytes of the spleen','Circulating freely in the blood','In the bone marrow store, ready for release'],a:'The airways are another common entryway for microorganisms.'}]}}},
+
+{id:'lymph',g:'Animations',title:'Lymphocytes on patrol',scen:{
+ patrol:{label:'The patrol route',svg:M6A,steps:[
+  {on:['p0'],cap:'Most lymphocytes are located in lymphoid tissue, such as lymph nodes, the spleen, and the thymus.',q:'Where are most lymphocytes located?',o:['In lymph nodes, the spleen and the thymus','In the circulating blood at all times','In the bone marrow store, ready for release','On the capillary walls of the liver and lungs'],a:'Lymphocytes in the blood stay there for only a few hours.'},
+  {off:['p0'],on:['p1'],cap:'Lymphocytes are transported by the lymph into the bloodstream.'},
+  {off:['p1'],on:['p2','tH'],cap:'They remain in the bloodstream for only a few hours.',q:'How long do lymphocytes remain in the bloodstream?',o:['Only a few hours','3–4 days','About 10 days','Several years'],a:'They then migrate into the tissues.'},
+  {off:['p2','tH'],on:['p3'],cap:'Then they migrate into the tissues, passing through the vessel wall by diapedesis.'},
+  {off:['p3'],on:['p4'],cap:'From the tissues, they enter the lymph vessels again.'},
+  {off:['p4'],on:['p0','tP'],cap:'Consequently, the lymphocytes are continuously patrolling the tissues.',q:'How do lymphocytes patrol the tissues?',o:['Lymph to blood, then tissues, then lymph again','They stay in the blood for their whole life','They leave the marrow once and stay in one tissue','They travel inside erythrocytes to the tissues'],a:'This circulation is continuous.'},
+  {on:['tY'],cap:'Like some macrophages, certain lymphocytes can survive for years.',q:'How long can certain lymphocytes survive?',o:['For years','For 4–8 hours','For 3–4 days','For about 10 days'],a:'Some macrophages can also survive for several years.'}]},
+ target:{label:'Any target, or one target',svg:M6B,steps:[
+  {on:['ca'],cap:'Lymphocytes are important in the defense against all types of microorganisms, and also against cancer cells.',q:'Against what do lymphocytes provide defense?',o:['All microorganisms, and also cancer cells','Bacteria only, which they engulf and digest','Parasites only, using toxic substances','Viruses in the blood only, using heparin'],a:'Lymphocytes provide defense against microorganisms and cancer cells.'},
+  {on:['aAny'],cap:'Each neutrophil and each macrophage is able to attack any type of bacteria or virus.'},
+  {on:['aOne','no'],cap:'A lymphocyte, in contrast, can only attack targets for which it is particularly programmed.',q:'How does a lymphocyte differ from a neutrophil or a macrophage in what it can attack?',o:['A lymphocyte can only attack targets for which it is particularly programmed','A lymphocyte can attack any type of bacteria or virus; a neutrophil only one','A lymphocyte cannot attack anything','There is no difference'],a:'Each neutrophil and each macrophage is able to attack any type of bacteria or virus.'},
+  {on:['adapt'],cap:'This forms the basis of the body’s adaptive (acquired) immune defense.',q:'What forms the basis of the body’s adaptive (acquired) immune defense?',o:['Lymphocytes programmed for particular targets','Neutrophils that can attack any type of bacteria','The large bone marrow store of granulocytes','Heparin and histamine released from basophils'],a:'Each lymphocyte is particularly programmed for its targets.'},
+  {on:['ab'],cap:'Lymphocytes seek out and combat microorganisms in a more elaborate manner than neutrophils and macrophages, partly by producing antibodies against the intruders.',q:'How do lymphocytes combat microorganisms, in part?',o:['By producing antibodies against intruders','By releasing histamine into the tissues','By releasing toxic substances onto them','By forming platelet plugs around them'],a:'Neutrophils and macrophages use phagocytosis instead.'}]}}},
+
+{id:'diff',g:'Virtual labs',title:'Differential count lab',build:buildDiff},
+{id:'total',g:'Virtual labs',title:'Total leukocyte count',build:buildTotal},
+
+mapMod({id:'who',title:'Leukocyte map: who am I?'},WHO_NODES,WHO_EDGES,WHOG,'There are five types of leukocytes. Click any box for its description, hide the labels to quiz the class, or press Who am I? for a clue.'),
+mapMod({id:'cases',title:'Leukocyte numbers: cases'},NUM_NODES,NUM_EDGES,NUMG,'Both the total number of leukocytes and the relative numbers of the various types vary considerably, even under normal conditions. Click any box for its description, or press New case.')
+];
+MODS.forEach((m,i)=>m.n=i+1);
+
+/* ---------- 7. Differential count lab ---------- */
+function buildDiff(stage,extra){
+  const TY=[['Neutrophil',NEU,44],['Eosinophil',EOS,44],['Basophil',BAS,40],['Monocyte',MONO,52],['Lymphocyte',LYM,30]];
+  const KEYT=['Irregular, multi-lobed nucleus; faint granules','Large orange-red granules; nucleus still visible','Dark blue granules covering much of the nucleus','Kidney-shaped nucleus; larger than a lymphocyte','Small cell, almost filled by a round nucleus'];
+  const HINT=['Look again: an irregular nucleus with several lobes, and faint granules.','Look again: large orange-red granules, with the nucleus still visible.','Look again: dark blue granules that cover much of the nucleus.','Look again: a large cell with a kidney-shaped nucleus.','Look again: a small cell, almost filled by a round nucleus.'];
+  const COL=['ngran','eos','basg','mono','lymph'];
+  const DOG=T95[4][2],DOGMID=12;
+  const NAME={Man:'humans',Horse:'the horse',Cow:'the cow',Pig:'the pig',Dog:'the dog',Sheep:'the sheep',Hen:'the hen'};
+  const RANGE=Object.fromEntries(T95.map(r=>[r[0],r[1]]));
+  const SAMPLES=[...[4,1,2,3,5,0,6].map(j=>({n:`${T95[j][0]}: healthy individual`,sp:T95[j][0],p:T95[j][2]})),
+    {n:'Mystery dog 1',cs:'bact',tot:28,p:[87,1,0,2,10]},{n:'Mystery dog 2',cs:'para',tot:14,p:[62,15,1,3,19]},{n:'Mystery dog 3',cs:'viral',tot:5,p:[45,3,0,4,48]}];
+  const CASE={
+    bact:{o:['An acute bacterial infection','A parasite infection or an allergic reaction','A viral infection','A normal count for a dog'],a:'The total count (28) is above the dog’s range of 6–18: leukocytosis. Neutrophils are about 24 × 10⁹/L, against about 8.4 in an average dog. The number of neutrophils mobilized from the bone marrow store increases greatly during acute bacterial infections.'},
+    para:{o:['A parasite infection or an allergic reaction','An acute bacterial infection','A viral infection','A normal count for a dog'],a:'The total count (14) is within the dog’s range, but eosinophils are about 2.1 × 10⁹/L, against about 0.4 in an average dog: more than five times as many. The number of eosinophils increases during allergic reactions and in response to parasite infection.'},
+    viral:{o:['A viral infection','An acute bacterial infection','A parasite infection or an allergic reaction','A normal count for a dog'],a:'The total count (5) is below the dog’s range: leukopenia. Neutrophils are about 2.3 × 10⁹/L, against about 8.4 in an average dog, while lymphocytes (about 2.4) are close to the average dog’s 2.8. The lymphocyte share rose only because the neutrophils fell. During viral infections, the number of neutrophils in the blood may be reduced.'}};
+  const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const exact=p=>{const tot=p.reduce((a,b)=>a+b,0),sc=p.map(v=>v*100/tot),fl=sc.map(Math.floor);const rem=100-fl.reduce((a,b)=>a+b,0);sc.map((v,i)=>[v-fl[i],i]).sort((a,b)=>b[0]-a[0]).slice(0,rem).forEach(([,i])=>fl[i]++);return fl;};
+  const sample=(p,r)=>{const tot=p.reduce((a,b)=>a+b,0);let c;for(let t=0;t<60;t++){c=[0,0,0,0,0];for(let k=0;k<100;k++){let u=r()*tot,i=0;while(i<4&&u>=p[i]){u-=p[i];i++;}c[i]++;}
+    if(c.every((v,i)=>{const q=p[i]/tot;return Math.abs(v-100*q)<=Math.max(1,2*Math.sqrt(100*q*(1-q)));}))break;}return c;};
+  const HRBC=(x,y,rot)=>`<g transform="translate(${x} ${y}) rotate(${rot})"><ellipse rx="20" ry="12" class="f-rbc"/><ellipse rx="6.5" ry="4.2" class="f-nuc"/></g>`;
+  const f1x=v=>(Math.round(v*10)/10).toFixed(1);
+  let cur,seq,idx,tally,done,final,run=0;
+  stage.innerHTML=`<div class="labgrid"><svg viewBox="0 0 340 340" role="img" aria-label="Microscope field with one leukocyte among erythrocytes">${DEFS}<defs><clipPath id="fclip"><circle cx="170" cy="170" r="157"/></clipPath></defs><circle cx="170" cy="170" r="160" class="field"/><g clip-path="url(#fclip)" id="dField"></g></svg>
+  <div class="labctl">
+    <label>Blood sample<select id="dS">${SAMPLES.map((s,i)=>`<option value="${i}">${s.n}</option>`).join('')}</select></label>
+    <p class="note" id="dTot" style="margin:0 0 6px"></p>
+    <p class="mq" id="dProg" style="margin:0 0 10px"></p>
+    <div class="dbtns" id="dBtns">${TY.map((t,i)=>`<button data-i="${i}">${t[0]}</button>`).join('')}</div>
+    <p class="fb" id="dFb" aria-live="polite"></p>
+    <div class="row" style="margin-bottom:16px"><button id="dRest">Count the rest for me</button><button id="dReset">New sample</button></div>
+    <div class="scroll"><table class="labt bars" id="dTab"></table></div>
+  </div></div>`;
+  extra.innerHTML=`<div class="row"><button id="dKeyB" aria-expanded="false">Show the identification key</button></div>
+  <div class="keyrow" id="dKeyRow" hidden>${TY.map((t,i)=>`<figure><svg viewBox="-60 -60 120 120" role="img" aria-label="${t[0]}">${t[1](t[2])}</svg><b>${t[0]}</b>${KEYT[i]}</figure>`).join('')}</div>
+  <div id="dRes"></div>
+  <div class="info" style="max-width:none"><h3>Total number of leukocytes and average distribution of the types</h3>
+  <div class="scroll"><table class="labt" style="margin-top:8px"><tr><th>Species</th><th class="num">Total (× 10⁹/L)</th><th class="num">Neutrophils (%)</th><th class="num">Eosinophils (%)</th><th class="num">Basophils (%)</th><th class="num">Monocytes (%)</th><th class="num">Lymphocytes (%)</th></tr>
+  ${T95.map(([n,t,p])=>`<tr><td>${n}</td><td class="num">${t}</td>${p.map(v=>`<td class="num">${pct(v)}</td>`).join('')}</tr>`).join('')}</table></div>
+  <p class="note">Determining the relative numbers of the different types of leukocytes is called differential counting. Here you count 100 leukocytes, so each count is also a percentage. The healthy samples are drawn at random from the species averages, so they vary a little each time, as real counts do. The mystery samples are teaching examples: the direction of each change follows the text, but the numbers are illustrative. Cell colours follow the usual appearance of a stained blood smear.</p></div>`;
+  function field(){const r=rng(SAMPLES.indexOf(cur)*1000+idx+7+run*131);let g='';const hen=cur.sp==='Hen';
+    for(let i=0;i<15;i++){const a=r()*6.283,d=72+r()*92,x=f1(170+Math.cos(a)*d),y=f1(170+Math.sin(a)*d);g+=hen?HRBC(x,y,Math.floor(r()*180)):R(x,y,17);}
+    if(done)g+=`<rect x="62" y="148" width="216" height="44" rx="22" class="elb"/>`+T(170,177,'100 cells counted','t-c t-l');
+    else{const t=seq[idx];g+=`<g transform="translate(170 170) rotate(${Math.floor(r()*360)})">${TY[t][1](TY[t][2])}</g>`;}
+    $('#dField').innerHTML=g;}
+  function table(){const ref=cur.cs?DOG:cur.p,abs=done&&cur.cs;
+    $('#dTab').innerHTML=`<tr><th>Cell type</th><th>Counted (%)</th>${done?`<th class="num">${cur.cs?'Average dog (%)':'Species average (%)'}</th>`:''}${abs?'<th class="num">This dog (× 10⁹/L)</th><th class="num">Average dog (× 10⁹/L)</th>':''}</tr>`+
+      TY.map((t,i)=>`<tr><td>${t[0]}s</td><td><span class="bar" style="width:${tally[i]*1.5}px;background:var(--${COL[i]})"></span>${tally[i]}</td>${done?`<td class="num">${pct(ref[i])}</td>`:''}${abs?`<td class="num">${f1x(tally[i]*cur.tot/100)}</td><td class="num">${f1x(ref[i]*DOGMID/100)}</td>`:''}</tr>`).join('');}
+  function prog(){$('#dProg').textContent=done?'Count finished: 100 cells.':`Cell ${idx+1} of 100: which type is this?`;$('#dRest').disabled=done||idx<10;$('#dRest').title=idx<10&&!done?'Identify 10 cells yourself first':'';document.querySelectorAll('#dBtns button').forEach(b=>b.disabled=done);}
+  function finish(){done=true;tally=final.slice();field();table();prog();$('#dFb').className='fb';$('#dFb').textContent='';
+    const res=$('#dRes');
+    if(cur.cs){const C=CASE[cur.cs],key='diff|'+cur.cs;delete S.ans[key];
+      res.innerHTML=`<div class="info"><h3>From shares to numbers</h3><p>A share alone cannot show whether a cell type has increased or decreased in number. Multiply each percentage by the total count: for example, ${tally[0]}% of ${cur.tot} × 10⁹/L is ${f1x(tally[0]*cur.tot/100)} × 10⁹ neutrophils per liter. The average dog column assumes a total of ${DOGMID} × 10⁹/L, the middle of the dog’s range of 6–18.</p></div>`+mcqBlock(`Compare ${cur.n.toLowerCase()} with the average dog. What does this count point to?`,C.o,C.a,key).replace('<b class="k">Ask the class</b>','');wireMcq(res);}
+    else{const b=cur.p[2];res.innerHTML=`<div class="info"><h3>Your count for ${NAME[cur.sp]}</h3><p>Compare your column with the species average beside it. With only 100 cells, chance alone shifts each percentage by a few points, and the relative numbers of the types also vary considerably between healthy individuals. Press New sample to count another healthy ${cur.sp==='Man'?'person':cur.sp.toLowerCase()}.${b<1?` Basophils average only ${b}% in this species, so a 100-cell count often finds none.`:''}${cur.sp==='Hen'?' Bird erythrocytes have a nucleus and are larger than mammalian erythrocytes, as in this field.':''}</p></div>`;}}
+  function reset(){cur=SAMPLES[+$('#dS').value];run++;
+    final=cur.cs?exact(cur.p):sample(cur.p,rng(SAMPLES.indexOf(cur)*977+13+run*7919));seq=[];final.forEach((c,i)=>{for(let k=0;k<c;k++)seq.push(i);});
+    const r=rng(SAMPLES.indexOf(cur)*977+29+run*104729);for(let i=seq.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[seq[i],seq[j]]=[seq[j],seq[i]];}
+    $('#dTot').textContent=cur.cs?`Total leukocyte count of this dog: ${cur.tot} × 10⁹/L (dog range 6–18).`:`Total leukocyte count for ${NAME[cur.sp]}: ${RANGE[cur.sp]} × 10⁹/L.`;
+    idx=0;tally=[0,0,0,0,0];done=false;$('#dRes').innerHTML='';$('#dFb').textContent='';$('#dFb').className='fb';field();table();prog();}
+  document.querySelectorAll('#dBtns button').forEach(b=>b.onclick=()=>{if(done)return;const i=+b.dataset.i,t=seq[idx],fb=$('#dFb');
+    if(i===t){tally[i]++;idx++;fb.className='fb good';fb.textContent=`Correct: ${TY[t][0].toLowerCase()}.`;if(idx>=100){finish();return;}field();table();prog();}
+    else{fb.className='fb bad';fb.textContent=HINT[t];}});
+  $('#dRest').onclick=finish;$('#dReset').onclick=reset;$('#dS').onchange=reset;
+  $('#dKeyB').onclick=()=>{const row=$('#dKeyRow'),b=$('#dKeyB');row.hidden=!row.hidden;b.setAttribute('aria-expanded',!row.hidden);b.textContent=row.hidden?'Show the identification key':'Hide the identification key';};
+  reset();
+}
+
+/* ---------- 8. Total leukocyte count ---------- */
+function buildTotal(stage,extra){
+  const RG={Man:[3,11],Horse:[5,12],Cow:[4,9],Pig:[11,22],Dog:[6,18],Sheep:[3,11],Hen:[20,30]};
+  const NAME={Man:'humans',Horse:'the horse',Cow:'the cow',Pig:'the pig',Dog:'the dog',Sheep:'the sheep',Hen:'the hen'};
+  const LAB={low:'leukopenia',ok:'within the normal range',high:'leukocytosis'};
+  const Q=[{sp:'Dog',v:24,a:'high',w:'An abnormally high number of leukocytes is called leukocytosis.'},
+   {sp:'Pig',v:15,a:'ok',w:'The same count would be above the range of a horse, cow, sheep or human.'},
+   {sp:'Horse',v:3.5,a:'low',w:'An abnormally low number of leukocytes is called leukopenia.'},
+   {sp:'Sheep',v:3.5,a:'ok',w:'This is below the general figure of 4 × 10⁹/L, but within the sheep’s own range. Always use the range for the species.'},
+   {sp:'Sheep',v:14,a:'high',w:'When the body is threatened by a serious infection, vast numbers of stored leukocytes are rapidly released from the bone marrow.'},
+   {sp:'Hen',v:25,a:'ok',w:'The hen has the highest range of the species listed.'},
+   {sp:'Man',v:2,a:'low',w:'Leukopenia can arise from drugs that reduce the activity of the bone marrow, such as chemotherapeutic drugs, and from radiation treatment.'},
+   {sp:'Cow',v:13,a:'high',w:'The same count would be within the range of a dog or a pig.'},
+   {sp:'Pig',v:8,a:'low',w:'The same count would be within the range of every other mammal listed.'},
+   {sp:'Pig',v:21,a:'ok',w:'This is above the general figure of 20 × 10⁹/L, but within the pig’s own range. Always use the range for the species.'}];
+  const X=v=>60+v*20;let i=-1,cur=null,ok=false;
+  let ticks='';for(let v=0;v<=35;v+=5)ticks+=`<path d="M${X(v)} 156 V178" class="tick"/>${T(X(v),200,v,'t-c t-s nocap')}`;
+  stage.innerHTML=SV(`
+  ${T(400,56,'Press New sample','t-c t-xl nocap','id="tV"')}${T(400,88,'','t-c t-s nocap','id="tU"')}
+  <rect id="tBand" x="60" y="150" width="0" height="34" rx="6" class="band" opacity="0"/>${T(400,140,'','t-c t-b nocap','id="tBL"')}
+  <path d="M60 167 H760" stroke="var(--mute)" stroke-width="3"/>${ticks}
+  ${T(410,228,'Leukocytes (× 10⁹ per liter)','t-c t-s')}
+  <g id="tMk" opacity="0"><path d="M0 162 L-10 138 H10Z" class="f-accent"/></g>
+  `,'0 0 800 245','Number line for the total leukocyte count')+`<div style="padding:4px 20px 20px"><div class="row"><button id="tNew" class="primary">New sample</button><span class="note">Look up the species in the table below, then choose.</span></div>
+  <div class="dbtns" id="tBtns" style="margin-top:14px;max-width:660px"><button data-a="low" disabled>Leukopenia</button><button data-a="ok" disabled>Within the normal range</button><button data-a="high" disabled>Leukocytosis</button></div>
+  <p class="fb" id="tFb" aria-live="polite"></p></div>`;
+  extra.innerHTML=`<div class="info" style="max-width:none"><h3>Normal values for the total number of leukocytes</h3>
+  <div class="scroll"><table class="labt" style="margin-top:8px"><tr><th>Species</th><th>Total (× 10⁹/L)</th><th>Range on a scale of 0 to 35</th></tr>
+  ${T95.map(([n,t])=>`<tr><td>${n}</td><td>${t}</td><td><span class="rng"><i style="left:${RG[n][0]*6}px;width:${(RG[n][1]-RG[n][0])*6}px"></i></span></td></tr>`).join('')}</table></div>
+  <p class="note">The usual range in domestic animals is about 4000–20 000 per µL of blood (4–20 × 10⁹/L). This is only approximate: the pig reaches 22, the sheep starts at 3, and the hen is 20–30. Always use the range for the species. An abnormally high number of leukocytes is called leukocytosis, and an abnormally low number is called leukopenia. The ten sample counts are teaching examples.</p></div>`;
+  const btns=()=>document.querySelectorAll('#tBtns button');
+  $('#tNew').onclick=()=>{i=(i+1)%Q.length;cur=Q[i];ok=false;
+    $('#tV').textContent=`${cur.sp==='Man'?'Human':cur.sp}: ${cur.v} × 10⁹ leukocytes per liter`;
+    $('#tU').textContent=`Sample ${i+1} of ${Q.length}. The same count is ${(cur.v*1000).toLocaleString('en').replace(/,/g,' ')} per µL.`;
+    $('#tMk').setAttribute('transform',`translate(${X(cur.v)} 0)`);$('#tMk').setAttribute('opacity',1);
+    $('#tBand').setAttribute('opacity',0);$('#tBL').textContent='';$('#tFb').textContent='';$('#tFb').className='fb';
+    btns().forEach(b=>{b.disabled=false;b.classList.remove('primary');});};
+  btns().forEach(b=>b.onclick=()=>{if(!cur||ok)return;const fb=$('#tFb'),[lo,hi]=RG[cur.sp];
+    if(b.dataset.a===cur.a){ok=true;b.classList.add('primary');fb.className='fb good';
+      fb.textContent=`Correct: ${LAB[cur.a]}. The range for ${NAME[cur.sp]} is ${lo}–${hi}. ${cur.w}`;
+      const band=$('#tBand');band.setAttribute('x',X(lo));band.setAttribute('width',(hi-lo)*20);band.setAttribute('opacity',1);
+      const bl=$('#tBL');bl.setAttribute('x',X((lo+hi)/2));bl.textContent=`Normal range: ${lo}–${hi}`;}
+    else{fb.className='fb bad';fb.textContent='Not quite. Compare the count with the range for this species in the table.';}});
+}
+
+const hashS=t=>{let h=7;for(const c of t)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h);};
+function mcqBlock(q,o,expl,key){const sh=shOf(q,o.length),opts=o.map((x,i)=>({x,c:i===0})),rot=opts.slice(sh).concat(opts.slice(0,sh)),done=S.ans[key];
+  return `<div class="ask mcq" data-key="${key}"><b class="k">Ask the class</b><p class="mq">${q}</p><div class="mopts">${rot.map((r,i)=>`<button class="mopt${done&&r.c?' right':''}" data-c="${r.c?1:0}" ${done?'disabled':''}><span class="ml">${'ABCD'[i]}</span><span>${r.x}</span></button>`).join('')}</div><p class="mfb good" ${done?'':'hidden'}>Correct.</p><span class="ans" ${done?'':'hidden'}>${expl}</span></div>`;}
+function wireMcq(root,onRight){root.querySelectorAll('.mcq').forEach(box=>{box.querySelectorAll('.mopt').forEach(b=>b.onclick=()=>{const ok=b.dataset.c==='1',fb=box.querySelector('.mfb');fb.hidden=false;
+  if(!ok)box.dataset.miss=1;
+  if(ok){if(onRight)onRight(!box.dataset.miss);b.classList.add('right');fb.className='mfb good';fb.textContent='Correct.';S.ans[box.dataset.key]=1;box.querySelectorAll('.mopt').forEach(x=>x.disabled=true);box.querySelector('.ans').hidden=false;}
+  else{b.classList.add('wrong');b.disabled=true;fb.className='mfb bad';fb.textContent='Not quite. Try another option.';}});});}
+/* ---------- engine ---------- */
+const S={mod:null,scen:null,i:0,phase:1,predict:false,timer:null,ans:{}};
+const stage=$('#stage'),capEl=$('#cap'),extraEl=$('#extra'),scenEl=$('#scen');
+const steps=()=>S.mod.scen[S.scen].steps;
+const sp=()=>(S.predict&&steps().length>1)?0:1;
+const sel=(root,k)=>root.querySelectorAll(`[data-k="${k}"],[data-t="${k}"]`);
+function apply(root,st,now){
+  (st.on||[]).forEach(k=>sel(root,k).forEach(e=>{e.classList.add('on');if(now)e.classList.add('now');}));
+  (st.off||[]).forEach(k=>sel(root,k).forEach(e=>e.classList.remove('on','now')));
+  (st.dim||[]).forEach(k=>sel(root,k).forEach(e=>e.classList.add('dim')));
+  if(now)(st.hot||[]).forEach(k=>sel(root,k).forEach(e=>e.classList.add('hot')));
+  for(const[k,v]of Object.entries(st.set||{}))sel(root,k).forEach(e=>e.textContent=CAP(v));
+  for(const[k,v]of Object.entries(st.fill||{}))sel(root,k).forEach(e=>{const t=e.tagName.toLowerCase()==='g'?e.querySelector('rect,ellipse,path,circle'):e;if(t)t.style.fill=v;});
+  for(const[k,v]of Object.entries(st.w||{}))sel(root,k).forEach(e=>e.setAttribute('width',(v*+e.dataset.max).toFixed(1)));
+}
+function tween(e,a,b){const t0=performance.now(),D=700;const f=t=>{const p=Math.min(1,(t-t0)/D),q=1-Math.pow(1-p,3);e.setAttribute('width',(a+(b-a)*q).toFixed(1));if(p<1)requestAnimationFrame(f);};e.setAttribute('width',a.toFixed(1));requestAnimationFrame(f);}
+function draw(){
+  const m=S.mod,st=steps(),cur=st[S.i];
+  stage.innerHTML=m.scen[S.scen].svg||m._svg;const root=stage.firstElementChild;
+  const prevW={};st.slice(0,S.i).forEach(s=>Object.assign(prevW,s.w||{}));
+  for(let j=0;j<=S.i;j++)apply(root,st[j],j===S.i);
+  for(const[k,v]of Object.entries(cur.w||{}))if(k in prevW&&!matchMedia('(prefers-reduced-motion: reduce)').matches)sel(root,k).forEach(e=>tween(e,prevW[k]*e.dataset.max,v*e.dataset.max));
+  const hide=S.phase===0;stage.classList.toggle('predict-hide',hide);
+  capEl.innerHTML=hide?`<div class="ask" style="margin-top:0"><b class="k">Predict</b>What happens in this step? Discuss it, then press Next to reveal.</div>`:`<p class="cap">${cur.cap}</p>`;
+  const one=st.length===1;$('#ctrl').classList.toggle('single',one);
+  $('#count').textContent=`Step ${S.i+1} of ${st.length}`;
+  $('#bBack').disabled=S.i===0&&S.phase===sp();
+  $('#bNext').disabled=S.i===st.length-1&&S.phase===1;
+  $('#bPlay').textContent=S.timer?'Pause':(S.i===st.length-1&&S.phase===1?'Replay':'Play');
+  if(m.after)m.after(root);
+}
+function next(){const st=steps();if(S.phase===0){S.phase=1;}else if(S.i<st.length-1){S.i++;S.phase=sp();}else return false;draw();return true;}
+function back(){if(S.i>0){S.i--;S.phase=1;}else if(S.phase===1&&sp()===0){S.phase=0;}else return;draw();}
+function stopPlay(){clearTimeout(S.timer);S.timer=null;const b=$('#bPlay');if(b)b.textContent='Play';}
+function play(){if(S.timer){stopPlay();return;}const st=steps();if(S.i===st.length-1&&S.phase===1){S.i=0;S.phase=sp();draw();}
+  const tick=()=>{const c=steps()[S.i];S.timer=setTimeout(()=>{if(!next()){stopPlay();return;}if(S.i===steps().length-1&&S.phase===1){stopPlay();draw();return;}tick();},S.phase===0?4000:(c.dur||6500));};
+  tick();$('#bPlay').textContent='Pause';}
+function openModule(id){
+  const m=MODS.find(x=>x.id===id)||MODS[0];
+  stopPlay();S.mod=m;S.i=0;
+  document.querySelectorAll('.nav a').forEach(a=>{if(a.dataset.id===m.id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  $('#mt').textContent=`${m.n}. ${m.title}`;$('#mref').textContent='';document.title=`${m.title}: white blood cells`;
+  showIntro(m);
+  stage.className='stage';
+  if(m.build){scenEl.innerHTML='';extraEl.innerHTML=m.extra||'';$('#panel').hidden=true;m.build(stage,extraEl);return;}
+  if(!m._svg&&m.svg)m._svg=typeof m.svg==='function'?m.svg():m.svg;
+  const keys=Object.keys(m.scen);S.scen=keys[0];
+  scenEl.innerHTML=keys.length>1?keys.map(k=>`<button data-s="${k}" aria-pressed="${k===S.scen}">${m.scen[k].label}</button>`).join(''):'';
+  scenEl.querySelectorAll('button').forEach(b=>b.onclick=()=>{stopPlay();S.scen=b.dataset.s;S.i=0;scenEl.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));showScen(m);});
+  showScen(m);
+}
+function showScen(m){
+  const sc=m.scen[S.scen];stage.className='stage';
+  if(sc.build){$('#panel').hidden=true;extraEl.innerHTML='';sc.build(stage,extraEl);return;}
+  $('#panel').hidden=false;extraEl.innerHTML=m.extra||'';
+  if(m.init)m.init(extraEl);
+  S.phase=sp();draw();if(m.autoplay&&!S.introOpen)play();
+}
+/* ---------- module instructions ---------- */
+const INTRO={
+ infl:{do:['Steps of inflammation: turn on Predict mode, and before each step say what the macrophages, mast cells and capillary will do next.','Signs and outcomes: before each branch appears, predict which signs it will produce.','Finish by linking each of the four signs (redness, heat, swelling, pain) to its cause.'],
+  lo:['Describe the steps of inflammation after a break in the skin.','State what resident macrophages and mast cells release, and the effects of histamine and cytokines on the local blood vessels.','Explain how neutrophils and monocytes reach the infection site.','Link redness and heat to increased blood delivery, and swelling and pain to the accumulation of fluid.','Describe the outcomes of inflammation, including systemic responses such as fever.','Name non-specific indicators of disease that can be found in a blood sample.']},
+ dia:{do:['Turn on Predict mode, then press Next one step at a time.','Before each step, predict where the leukocytes will go next.','Name each stage as it appears: margination, increased permeability, diapedesis, chemotaxis.','Finish by explaining phagocytosis and opsonization.'],
+  lo:['Describe how a chemotactic substance spreads from the chemotaxis source.','Define margination, increased permeability, diapedesis and chemotaxis.','Describe the sequence by which a leukocyte leaves the blood and reaches the infection site.','Explain how leukocytes pass through the vessel wall between endothelial cells.','Define phagocytosis and opsonization, and name the cells that defend by phagocytosis.']},
+ meet:{do:['White cells and red cells: press Next one step at a time and compare what erythrocytes and leukocytes use the blood for.','The bone marrow reserve: before each step, predict what the two bars will do.','Give the three reasons why white cells dominate in the bone marrow but not in the blood.'],
+  lo:['Explain why leukocytes are called white blood cells.','Compare the number of leukocytes and erythrocytes in the blood.','Explain what leukocytes use the blood for.','Give three reasons why about 75% of bone marrow cells are white blood cells or their precursors.','Define leukocytosis and leukopenia, and give causes of each.']},
+ types:{do:['Turn on Predict mode, then press Next one step at a time.','Before each name is revealed, name the cell and say what you see: nucleus, vesicles and size.','Sort the five types into granulocytes and non-granular leukocytes.','Finish by saying which types use phagocytosis and which produce antibodies.'],
+  lo:['Explain why leukocytes must be stained before they can be identified.','State the three features used to classify leukocytes.','Name the three granulocytes and the two non-granular leukocytes.','Describe the nucleus of a neutrophil and of a monocyte.','Define phagocytosis and name the leukocytes that use it.']},
+ tree:{do:['The family tree: turn on Predict mode and name each cell before its label appears.','Say which cells come from lymphoid stem cells and which from myeloid stem cells.','Cytokines and infection: at each step, predict what the three bars will do next.'],
+  lo:['State that all blood cells originate from a single pluripotent stem cell type.','List the cells produced by lymphoid and by myeloid stem cells.','State where granulocytes, monocytes and mature lymphocytes are formed.','Define cytokines and explain how they regulate leukocyte production during an infection.','Give the two ways in which the number of granulocytes in the blood is regulated.']},
+ gran:{do:['Work through the three tabs: Neutrophil and bacteria, Eosinophil and parasite, Basophil and mast cell.','In each tab, say where the cell goes after it leaves the blood and what it does there.','Note the times: how long in the blood, and how long in the tissues.'],
+  lo:['State how long granulocytes stay in the blood and in the tissues.','Explain the role of neutrophils in bacterial infections, and why a large marrow store is needed.','Explain how neutrophil numbers can give a clue as to whether an infection is bacterial or viral.','Describe how eosinophils act against parasites, and when their number increases.','Name the substances in basophil vesicles and explain the roles of histamine and heparin.','State which blood cell resembles the mast cells in tissues.']},
+ mono:{do:['A monocyte becomes a macrophage: compare the monocyte with the neutrophil, then follow it into the tissues.','Guards at two gateways: predict what happens to the bacteria at each gateway before pressing Next.'],
+  lo:['State how long monocytes stay in the blood.','Compare monocytes and neutrophils as they leave the bone marrow.','Describe how a monocyte becomes a macrophage.','Define a stationary macrophage.','Explain the role of Kupffer cells and of alveolar macrophages.']},
+ lymph:{do:['The patrol route: follow one lymphocyte around the route and name each stop before pressing Next.','Any target, or one target: compare what a neutrophil or a macrophage can attack with what a lymphocyte can attack.'],
+  lo:['State where most lymphocytes are located.','Describe how lymphocytes patrol the tissues.','State how long lymphocytes stay in the blood, and how long certain lymphocytes can survive.','Explain how a lymphocyte differs from a neutrophil or a macrophage in the targets it can attack.','State the basis of the adaptive (acquired) immune defense.']},
+ diff:{do:['Choose a blood sample. Identify each leukocyte in the microscope field by pressing the button with its name.','After at least 10 cells, you may press Count the rest for me to finish the 100-cell count. Press New sample to count another animal of the same species.','Compare your count with the reference table.','Then count the three mystery dogs. Use each dog’s total count to turn the percentages into numbers, and decide what each count points to.'],
+  lo:['Identify the five types of leukocytes in a stained blood sample.','Define differential counting and explain why it has diagnostic value.','Compare the leukocyte distribution of the dog, horse, cow, pig, sheep, human and hen.','Use the total count to convert percentages into numbers, and interpret raised neutrophils, raised eosinophils and reduced neutrophils.']},
+ total:{do:['Press New sample and read the species and its leukocyte count.','Look up the normal range for that species in the table, then choose: leukopenia, within the normal range, or leukocytosis.','Work through all ten samples. Notice when the same count means something different in another species.'],
+  lo:['State the approximate leukocyte count of domestic animals, and explain why the range for the species must be used.','Define leukocytosis and leukopenia.','Interpret a total leukocyte count using the range for the species.','Compare the normal ranges of the different species.']},
+ who:{do:['Click each box to read about it.','Press Who am I? Read the clue aloud, then click the box that answers it. Repeat for all ten clues.','Turn on Hide labels and quiz a partner on each box.'],
+  lo:['Sort the leukocytes into granulocytes and non-granular leukocytes.','Give the main function of each of the five types of leukocytes.','Relate monocytes to macrophages and Kupffer cells, and basophils to mast cells.']},
+ cases:{do:['Click each box to read about it.','Press New case, read the case aloud, and click the box that fits. Repeat for all nine cases.','Use Hide labels to test yourselves.'],
+  lo:['State the approximate leukocyte count of domestic animals, and explain why the range for the species must be used.','Define leukocytosis and leukopenia and give a cause of each.','Explain what differential counting is.','Relate changes in neutrophil and eosinophil numbers to bacterial infections, viral infections, parasite infections and allergic reactions.']}};
+
+function showIntro(m){const it=INTRO[m.id];if(!it)return;S.introOpen=true;
+  $('#introN').textContent=`Module ${m.n}`;$('#introT').textContent=m.title;
+  $('#introDo').innerHTML=it.do.filter(x=>!x.includes('Ask the class')).concat('When you have finished, press Test yourself below the module title.').map(x=>`<li>${x}</li>`).join('');$('#introLo').innerHTML=it.lo.map(x=>`<li>${x}</li>`).join('');
+  $('#intro').hidden=false;setTimeout(()=>$('#introGo').focus(),30);}
+function closeIntro(){if(!S.introOpen)return;S.introOpen=false;$('#intro').hidden=true;const m=S.mod;
+  if(m&&m.autoplay&&m.scen&&!m.scen[S.scen].build)play();}
+$('#introGo').onclick=closeIntro;
+$('#intro').addEventListener('click',e=>{if(e.target.id==='intro')closeIntro();});
+$('#bIntro').onclick=()=>{stopPlay();if(S.mod.scen&&!S.mod.build)draw();showIntro(S.mod);};
+
+/* ---------- Test yourself ---------- */
+const TESTX={
+ infl:[
+  {q:'Which effects does histamine have on the local blood vessels?',o:['Vasodilation and increased permeability','Vasoconstriction and reduced permeability','Clot formation and vessel repair','Production of new endothelial cells'],a:'Histamine dilates local blood vessels and widens the capillary pores.'},
+  {q:'Which two signs of inflammation come from the local accumulation of fluid?',o:['Swelling and pain','Redness and heat','Heat and fever','Redness and pain'],a:'Redness and heat come from increased blood delivery.'},
+  {q:'Which cells first engulf bacteria at a wound, before new phagocytes arrive?',o:['Resident macrophages','Mast cells near capillaries','Circulating erythrocytes','Blood platelets'],a:'They then secrete cytokines and chemotaxins.'},
+  {q:'What do chemotaxins do in inflammation?',o:['Attract phagocytes to the site','Dilate the local arterioles','Release histamine from mast cells','Carry oxygen to the tissue'],a:'Chemotaxins are released at the site of damage.'}],
+ dia:[
+  {q:'In what order does a neutrophil leave the blood and reach an infection?',o:['Sticks to wall, squeezes out, migrates to site','Squeezes out, sticks to wall, migrates to site','Migrates to site, sticks to wall, squeezes out','Sticks to wall, migrates to site, squeezes out'],a:'Margination, then diapedesis, then migration to the infection site. Chemotaxins attract the cells throughout.'},
+  {q:'Through which part of the vessel wall do leukocytes pass during diapedesis?',o:['The spaces between endothelial cells','Openings made by digesting the wall','Channels inside the erythrocytes','Pores in the blood platelets'],a:'At the site of infection these spaces widen: increased permeability.'},
+  {q:'Which antibody-producing cells make opsonization possible?',o:['Lymphocytes','Neutrophils','Eosinophils','Basophils'],a:'Lymphocytes combat microorganisms partly by producing antibodies.'}],
+ gran:[
+  {q:'What are mast cells?',o:['Basophil-like cells in tissues, near capillaries','Immature monocytes circulating in the blood','Stationary macrophages on the liver capillaries','Fragments that bud off from megakaryocytes'],a:'Histamine and the other substances released from basophils and mast cells are largely responsible for most allergic reactions.'}],
+ diff:[
+  {q:'What is differential counting?',o:['Determining the relative numbers of the different types of leukocytes','Counting the total number of leukocytes per liter of blood','Counting erythrocytes and leukocytes together','Measuring the size of each leukocyte'],a:'It is often of diagnostic value, because the relative numbers vary with the type of assault the body is combating.'},
+  {q:'Which leukocyte makes up the largest share in the dog?',o:['Neutrophils, about 70%','Lymphocytes, about 70%','Eosinophils, about 30%','Monocytes, about 50%'],a:'The dog averages 70% neutrophils and 23% lymphocytes.'},
+  {q:'Which leukocyte is the most numerous in the cow and the sheep?',o:['Lymphocytes','Neutrophils','Eosinophils','Basophils'],a:'The cow averages 53% lymphocytes and the sheep 62%.'},
+  {q:'Which leukocyte is the least numerous in every species listed?',o:['Basophils','Monocytes','Eosinophils','Lymphocytes'],a:'Basophils range from 0.1% in the cow to 2.5% in the hen.'},
+  {q:'A dog has a high total leukocyte count, and most of the extra cells are neutrophils. What does this point to?',o:['An acute bacterial infection','A viral infection of the airways','A parasite infection of the gut','Leukopenia after chemotherapy'],a:'The number of neutrophils mobilized from the bone marrow store increases greatly during acute bacterial infections.'},
+  {q:'A calf has a raised number of eosinophils in its blood. What does this point to?',o:['An allergic reaction or parasite infection','An acute bacterial infection of the skin','A viral infection of the airways','Bone marrow failure after radiation'],a:'The number of eosinophils increases during allergic reactions and in response to parasite infection.'},
+  {q:'What may happen to the number of neutrophils in the blood during viral infections?',o:['It may be reduced','It always increases greatly','It never changes','It doubles within hours'],a:'Differential counting may therefore provide a clue as to whether an infection is bacterial or viral.'}],
+ total:[
+  {q:'About what range does the leukocyte count usually fall within in domestic animals?',o:['About 4–20 × 10⁹/L, varying by species','About 4–20 × 10¹²/L, like erythrocytes','About 0.4–2 × 10⁹/L in every species','Exactly 12 × 10⁹/L in every species'],a:'This is only approximate: the pig’s range is 11–22, the sheep’s 3–11 and the hen’s 20–30, so always use the range for the species.'},
+  {q:'What is an abnormally high number of leukocytes called?',o:['Leukocytosis','Leukopenia','Polycythemia','Thrombocytopenia'],a:'An abnormally low number is called leukopenia.'},
+  {q:'What is leukopenia?',o:['An abnormally low number of white blood cells','An abnormally high number of white blood cells','An abnormally low number of erythrocytes','An abnormally high number of blood platelets'],a:'It can arise from drugs that reduce the activity of the bone marrow, and from radiation treatment.'},
+  {q:'A pig has 15 × 10⁹ leukocytes per liter. How do you interpret this count?',o:['Within the pig’s normal range','Leukocytosis, as it is above 11','Leukopenia, as it is below 20','It cannot be judged without a smear'],a:'The pig’s range is 11–22. The same count would be above the range of a horse, cow, sheep or human.'},
+  {q:'Which species has the highest normal total leukocyte count?',o:['Hen, 20–30 × 10⁹/L','Dog, 6–18 × 10⁹/L','Cow, 4–9 × 10⁹/L','Horse, 5–12 × 10⁹/L'],a:'Among the mammals, the pig has the highest range: 11–22 × 10⁹/L.'},
+  {q:'How do leukocyte numbers behave over time in a healthy individual, compared with erythrocyte numbers?',o:['Leukocytes vary considerably; erythrocytes only slightly','Leukocytes never change; erythrocytes vary considerably','Both stay constant in a healthy individual','Both vary considerably, by the same amount'],a:'This is true even under normal conditions.'},
+  {q:'A cat has leukopenia. Which history best explains it?',o:['It is receiving chemotherapy for a tumour','It has an acute bacterial infection','It was frightened while blood was drawn','It ate a large meal with a high fat content'],a:'Chemotherapeutic drugs reduce the activity of the bone marrow. If the entire production of leukocytes ceases, serious infections arise, and death usually follows within a few days without treatment.'}]};
+const nodeName=n=>n.l.split('\n')[0].replace(/\|/g,' ');
+function buildTest(m){const out=[],seen=new Set(),add=(q,o,a)=>{if(seen.has(q))return;seen.add(q);out.push({q,o,a});};
+  if(m.scen)Object.values(m.scen).forEach(sc=>(sc.steps||[]).forEach(st=>{if(st.q&&st.o)add(st.q,st.o,st.a||'');}));
+  (TESTX[m.id]||[]).forEach(x=>add(x.q,x.o,x.a));
+  if(m.game){const pool=m.nodes.filter(n=>n.id!=='root');m.game.items.forEach((x,i)=>{const others=pool.filter(n=>n.id!==x.a&&!(x.not||[]).includes(n.id)),ds=x.d?x.d.map(id=>pool.find(n=>n.id===id)):[0,1,2].map(k=>others[(i+k*2)%others.length]);add(x.t,[nodeName(pool.find(n=>n.id===x.a)),...ds.map(nodeName)],x.w);});}
+  return out;}
+
+var QPOS=null;const QPAT=[2,0,3,1,3,1,2,0];
+function shOf(q,n){if(!QPOS){QPOS={};let k=0;MODS.forEach(m=>buildTest(m).forEach(it=>{if(!(it.q in QPOS))QPOS[it.q]=QPAT[k++%8];}));}
+  const p=(q in QPOS?QPOS[q]:hashS(q))%n;return (n-p)%n;}
+
+const QZ={list:[],i:0,score:0,open:false};
+function quizRender(){const body=$('#qBody'),nx=$('#qNext');
+  if(QZ.i>=QZ.list.length){$('#qProg').textContent='Finished';body.innerHTML=`<p class="qscore">${QZ.score} of ${QZ.list.length}</p><p style="text-align:center;margin:0">answered correctly on the first try.</p>`;nx.textContent='Try again';return;}
+  const it=QZ.list[QZ.i],key='quiz|'+QZ.i;delete S.ans[key];
+  $('#qProg').textContent=`Question ${QZ.i+1} of ${QZ.list.length}`;
+  body.innerHTML=mcqBlock(it.q,it.o,it.a,key).replace('<b class="k">Ask the class</b>','');
+  wireMcq(body,first=>{if(first)QZ.score++;});
+  nx.textContent=QZ.i===QZ.list.length-1?'See my score':'Next question';}
+function openQuiz(){stopPlay();QZ.list=buildTest(S.mod);QZ.i=0;QZ.score=0;QZ.open=true;$('#qT').textContent='Test yourself: '+S.mod.title;$('#quiz').hidden=false;quizRender();setTimeout(()=>$('#qNext').focus(),30);}
+function closeQuiz(){QZ.open=false;$('#quiz').hidden=true;}
+$('#bTest').onclick=openQuiz;$('#qClose').onclick=closeQuiz;
+$('#quiz').addEventListener('click',e=>{if(e.target.id==='quiz')closeQuiz();});
+$('#qNext').onclick=()=>{if(QZ.i>=QZ.list.length){QZ.i=0;QZ.score=0;}else QZ.i++;quizRender();};
+/* nav */
+let navHTML='',lastG='';
+MODS.forEach(m=>{if(m.g!==lastG){navHTML+=`<div class="grp">${m.g}</div>`;lastG=m.g;}navHTML+=`<a href="#${m.id}" data-id="${m.id}"><span class="n">${m.n}</span><span>${m.title}</span></a>`;});
+$('#nav').innerHTML=navHTML;
+$('#bNext').onclick=()=>{stopPlay();next();};
+$('#bBack').onclick=()=>{stopPlay();back();};
+$('#bPlay').onclick=play;
+$('#pred').onchange=e=>{S.predict=e.target.checked;if(S.mod&&S.mod.scen){S.phase=sp();draw();}};
+$('#bPresent').onclick=()=>{const on=document.body.classList.toggle('present');$('#bPresent').setAttribute('aria-pressed',on);$('#bPresent').textContent=on?'Show modules':'Present';};
+document.addEventListener('keydown',e=>{
+  if(S.introOpen){if(e.key==='Escape'||e.key==='Enter'){e.preventDefault();closeIntro();}return;}
+  if(QZ.open){if(e.key==='Escape')closeQuiz();return;}
+  const tag=(e.target.tagName||'').toLowerCase();if(['input','select','textarea'].includes(tag))return;
+  if(e.key==='Escape'&&document.body.classList.contains('present')){$('#bPresent').click();return;}
+  if(!S.mod||S.mod.build||$('#panel').hidden)return;
+  if(e.key==='ArrowRight'){e.preventDefault();stopPlay();next();}
+  else if(e.key==='ArrowLeft'){e.preventDefault();stopPlay();back();}
+});
+window.addEventListener('hashchange',()=>openModule(location.hash.slice(1)));
+openModule(location.hash.slice(1));
+</script>
+</body>
+</html>
